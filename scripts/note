@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# This script allows you to manage notes using Neovim.
+# The notes are stored in the ~/notes directory.
+
+# Ensure the notes directory exists
+NOTES_DIR="$HOME/notes"
+mkdir -p "$NOTES_DIR"
+
+# Function to display usage information
+show_usage() {
+  echo "Usage: note {ls|n <filename>|d <filename>|<filename>}"
+  echo ""
+  echo "Commands:"
+  echo "  ls              List all notes in the notes directory."
+  echo "  n <filename>    Create a new note with the specified filename and open it in Neovim."
+  echo "  d <filename>    Delete the specified note."
+  echo "  <filename>      Open the specified note in Neovim."
+}
+
+case "$1" in
+  ls)
+    # List all notes in the notes directory
+    ls "$NOTES_DIR"
+    ;;
+  n)
+    # Create a new note with the specified filename and open it in Neovim
+    if [ -z "$2" ]; then
+      echo "Please provide a file name."
+      show_usage
+      exit 1
+    fi
+    FILE_NAME="$2"
+    NEW_NOTE="$NOTES_DIR/$FILE_NAME.md"
+    touch "$NEW_NOTE"
+    nvim "$NEW_NOTE"
+    ;;
+  d)
+    # Delete the specified note
+    if [ -z "$2" ]; then
+      echo "Please specify the file name to delete."
+      show_usage
+      exit 1
+    fi
+    FILE_TO_DELETE="$NOTES_DIR/$2"
+    if [ -f "$FILE_TO_DELETE" ]; then
+      rm "$FILE_TO_DELETE"
+      echo "Deleted $2"
+    else
+      echo "File $2 not found."
+    fi
+    ;;
+  *)
+    # Open the specified note in Neovim, or show usage if no filename is provided
+    if [ -z "$1" ]; then
+      show_usage
+      exit 1
+    fi
+    FILE_TO_OPEN="$NOTES_DIR/$1"
+    if [ -f "$FILE_TO_OPEN" ]; then
+      nvim "$FILE_TO_OPEN"
+    else
+      echo "File $1 not found."
+    fi
+    ;;
+esac
