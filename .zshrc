@@ -40,31 +40,17 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.in
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 # Aliases
-alias cat="bat"
 alias code="open -a 'Visual Studio Code'"
 alias dc='docker-compose'
-
-# some git comand aliases
-alias pr="gh pr view --web"
-alias gb="current_branch"
-alias gc="gcheckout"
-alias gs="git status"
-alias gd="git diff"
-alias gl="git log"
-alias gsa="git stash apply stash@{0}"
-alias gcm="git switch master"
-alias gcd="git switch dev"
-alias gmd="git merge dev"
 
 # atcoder
 alias ojtr='oj t -c "ruby main.rb" -d test'
 alias ojtcpp='oj t -c "g++ -std=c++17 -O2 -o main main.cpp" -d test'
 
-# nvim のショートカットキーヘルプファイルを開く
-alias nvimh='nvim ~/.config/nvim/help.txt'
-alias nerdth='nvim ~/.config/nvim/nerdtree_help.txt'
-
-
-eval "$(starship init zsh)"
+# ディレクトリ移動のショートカット
+alias yuuki008="cd ~/github/yuuki008"
+alias work="cd ~/github/hide-and-seek-dev"
+alias note="cd ~/github/yuuki008/note"
+alias dotfiles="cd ~/dotfiles"
 export GPG_TTY=$(tty)
 
