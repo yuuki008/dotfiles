@@ -43,3 +43,6 @@ disabled = true
 [time]
 disabled = true
 
+[docker_context]
+disabled = true
+
