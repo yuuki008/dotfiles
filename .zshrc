@@ -54,3 +54,5 @@ alias note="cd ~/github/yuuki008/note"
 alias dotfiles="cd ~/dotfiles"
 export GPG_TTY=$(tty)
 
+# starship
+eval "$(starship init zsh)"

@@ -1,0 +1,45 @@
+# ~/.config/starship.toml
+
+[status]
+disabled = true
+
+[git_status]
+disabled = true
+
+[aws]
+disabled = true
+
+[battery]
+disabled = true
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[gcloud]
+disabled = true
+
+[hostname]
+disabled = true
+
+[java]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[python]
+disabled = true
+
+[rust]
+disabled = true
+
+[terraform]
+disabled = true
+
+[time]
+disabled = true
+
