@@ -46,3 +46,5 @@ disabled = true
 [docker_context]
 disabled = true
 
+[lua]
+disabled = true
