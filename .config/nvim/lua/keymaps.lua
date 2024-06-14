@@ -78,3 +78,8 @@ keymap("v", "v", "$h", opts)
 
 -- 0番レジスタを使いやすくした
 keymap("v", "<C-p>", '"0p', opts)
+
+-- Telescope のキーマッピング
+keymap("n", "<C-p>", ':Telescope find_files<CR>', opts)
+keymap("n", "<C-g>", ':Telescope live_grep<CR>', opts)
+
