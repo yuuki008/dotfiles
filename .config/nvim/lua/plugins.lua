@@ -84,6 +84,9 @@ return packer.startup(function(use)
 
 	use({ "windwp/nvim-ts-autotag" })
 
+  -- Commentary
+	use({ "tpope/vim-commentary" })
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
