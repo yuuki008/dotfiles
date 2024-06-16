@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+cd "$HOME"
+
+# Install Homebrew
+if [ ! -f /usr/local/bin/brew ]; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+else
+  echo "Homebrew already installed."
+fi
+
+# Clone my dotfiles
+if [ ! -d "$HOME/dotfiles" ]; then
+  echo "Cloning dotfiles..."
+  git clone git@github.com:yuuki008/dotfiles.git
+fi
+
+# Install some software
+echo "Installing some software & library..."
+brew bundle -v --file="$HOME/dotfiles/Brewfile"
+
+# Source zsh configuration
+echo "zshの読み込み"
+source "$HOME/.zshrc"
+
+# Symlink dotfiles
+echo "シンボリックリンクを貼る"
+echo "Symlinking dotfiles..."
+mkdir -p "$HOME/.config"  # Ensure .config directory exists
+
+ln -sf "$HOME/dotfiles/.config/nvim" "$HOME/.config/nvim"
+ln -sf "$HOME/dotfiles/.config/starship.toml" "$HOME/.config/starship.toml"
+ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf" "$HOME/.tmux.conf"
+ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf.osx" "$HOME/.tmux.conf.osx"
+ln -sf "$HOME/dotfiles/.config/tmux/tmux.powerline.conf" "$HOME/.tmux.powerline.conf"
+
