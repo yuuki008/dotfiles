@@ -24,7 +24,6 @@ export PATH="/usr/local/opt/curl/bin:$PATH"
 export PATH="$HOME/usr/local/bin:$PATH"
 export PATH="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:$PATH"
 export PATH="$HOME/github/yuuki008/aoj/cli:$PATH"
-
 # Load rbenv
 if command -v rbenv 1>/dev/null 2>&1; then
   eval "$(rbenv init -)"
@@ -44,8 +43,8 @@ alias code="open -a 'Visual Studio Code'"
 alias dc='docker-compose'
 
 # atcoder
-alias ojtr='oj t -c "ruby main.rb" -d test'
-alias ojtcpp='oj t -c "g++ -std=c++17 -O2 -o main main.cpp" -d test'
+alias ojtr='oj t -c "ruby main.rb" -d tests'
+alias ojtcpp='g++ -o main main.cpp;  oj test -c ./main -d tests'
 
 # ディレクトリ移動のショートカット
 alias yuuki008="cd ~/github/yuuki008"
