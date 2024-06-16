@@ -1,0 +1,14 @@
+[gen]
+template_file = "/Users/yu-home/github/yuuki008/aoj/cli/template.txt"
+destination_file_name = "main.cpp"
+
+[test]
+before_all="g++ main.cpp -o a.out"
+before_each=""
+command="./a.out"
+after_each=""
+after_all=""
+
+[submit]
+language = "C++14"
+source_file_name = "main.cpp"

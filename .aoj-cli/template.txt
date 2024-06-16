@@ -1,0 +1,14 @@
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <cmath>
+#include <iomanip>
+#include <climits>
+using namespace std;
+
+int main() {
+  cout << "Hello World" << endl;
+  return 0;
+}
