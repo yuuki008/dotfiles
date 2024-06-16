@@ -2,33 +2,10 @@
 
 https://zenn.dev/hisasann/articles/neovim-settings-to-lua
 
-## シンボリックリンク
-
-- nvim
+# 手順
 
 ```
-ln -s ~/github/yuuki008/dotfiles/.config/nvim ~/.config/
+git clone https://github.com/yuuki008/dotfiles.git
+chmod +x setup
+./setup
 ```
-
-- zshrc
-
-```
-ln -s ~/dotfiles/.zshrc ~/.zshrc
-```
-
-- note
-
-```
-ln -s ~/github/yuuki008/dotfiles/scripts/note /usr/local/bin/note
-```
-
-# nvim ログ確認
-
-```
-nvim -V3nvimlog
-nvim nvimlog
-```
-
-# プラグインインストール
-
-`:PackerSync`
