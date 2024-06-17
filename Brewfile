@@ -18,7 +18,7 @@ brew "zsh"               # シェル
 brew "jq"                # JSON プロセッサ
 brew "tree"              # ディレクトリ構造表示ツール
 brew "bat"               # cat コマンドの代替
-
+brew "ranger"            # TUI ファイル管理アプリケーション
 # Casks
 cask "alacritty"
 cask "google-cloud-sdk"
