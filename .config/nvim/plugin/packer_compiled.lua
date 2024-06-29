@@ -149,6 +149,11 @@ _G.packer_plugins = {
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-gdb"] = {
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-gdb",
+    url = "https://github.com/sakhnik/nvim-gdb"
+  },
   ["nvim-lsp-installer"] = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
@@ -203,6 +208,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
+  },
+  ["zen-mode.nvim"] = {
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
+    url = "https://github.com/folke/zen-mode.nvim"
   }
 }
 

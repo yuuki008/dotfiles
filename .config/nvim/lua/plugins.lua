@@ -64,7 +64,7 @@ return packer.startup(function(use)
 	use({ "onsails/lspkind-nvim" })
 
 	-- snippets
-	use({ "L3MON4D3/LuaSnip" }) --snippet engine
+	use({ "L3MON4D3/LuaSnip" }) -- snippet engine
 
 	-- LSP
 	use({ "neovim/nvim-lspconfig" }) -- enable LSP
@@ -87,9 +87,16 @@ return packer.startup(function(use)
   -- Commentary
 	use({ "tpope/vim-commentary" })
 
+  -- Gdb
+  use {'sakhnik/nvim-gdb', run = ':!./install.sh'}
+
+    -- Zen Mode
+  use({ "folke/zen-mode.nvim" })
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
 end)
+

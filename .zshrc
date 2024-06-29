@@ -41,6 +41,7 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 # Aliases
 alias code="open -a 'Visual Studio Code'"
 alias dc='docker-compose'
+alias cl="clear"
 
 # atcoder
 alias ojtr='oj t -c "ruby main.rb" -d tests'
@@ -52,6 +53,9 @@ alias work="cd ~/github/hide-and-seek-dev"
 alias note="cd ~/github/yuuki008/note"
 alias dotfiles="cd ~/dotfiles"
 export GPG_TTY=$(tty)
+
+# lazygit
+alias lg="lazygit"
 
 # starship
 eval "$(starship init zsh)"
