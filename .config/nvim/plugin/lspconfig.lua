@@ -114,6 +114,7 @@ nvim_lsp.lua_ls.setup({
 nvim_lsp.clangd.setup({
     on_attach = on_attach,
     capabilities = capabilities,
+    cmd = { "clangd", "--std=c++17" }
 })
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
