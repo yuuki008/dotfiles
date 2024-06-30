@@ -48,7 +48,7 @@ alias ojtr='oj t -c "ruby main.rb" -d tests'
 alias ojtcpp='g++ -o main main.cpp;  oj test -c ./main -d tests'
 
 # ディレクトリ移動のショートカット
-alias yuuki008="cd ~/github/yuuki008"
+alias yuuki="cd ~/github/yuuki008"
 alias work="cd ~/github/hide-and-seek-dev"
 alias note="cd ~/github/yuuki008/note"
 alias dotfiles="cd ~/dotfiles"
