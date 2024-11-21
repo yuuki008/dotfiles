@@ -83,3 +83,9 @@ keymap("v", "<C-p>", '"0p', opts)
 keymap("n", "<C-p>", ':Telescope find_files<CR>', opts)
 keymap("n", "<C-g>", ':Telescope live_grep<CR>', opts)
 
+-- NvimTree のキーマッピング
+keymap("n", "<Space>e", ":NvimTreeToggle<CR>", opts)
+
+-- Terminal --
+keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+

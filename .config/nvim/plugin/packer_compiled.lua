@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["copilot.vim"] = {
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/copilot.vim",
+    url = "https://github.com/github/copilot.vim"
+  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
@@ -128,6 +133,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  ["mdx.nvim"] = {
+    config = { "\27LJ\2\nU\0\0\4\0\6\0\b6\0\0\0009\0\1\0009\0\2\0009\0\3\0'\2\4\0'\3\5\0B\0\3\1K\0\1\0\bmdx\rmarkdown\rregister\rlanguage\15treesitter\bvim\0" },
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/mdx.nvim",
+    url = "https://github.com/davidmh/mdx.nvim"
   },
   ["nightfox.nvim"] = {
     loaded = true,
@@ -164,7 +175,14 @@ _G.packer_plugins = {
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    config = { "\27LJ\2\n^\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\1\tview\0\1\0\1\tside\tleft\nsetup\14nvim-tree\frequire\0" },
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/kyazdani42/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
+    config = { "\27LJ\2\nù\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\1\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\6\0\0\rmarkdown\20markdown_inline\15javascript\15typescript\btsx\nsetup\28nvim-treesitter.configs\frequire\0" },
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -209,6 +227,11 @@ _G.packer_plugins = {
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/vim-commentary",
     url = "https://github.com/tpope/vim-commentary"
   },
+  ["vim-prisma"] = {
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/vim-prisma",
+    url = "https://github.com/pantharshit00/vim-prisma"
+  },
   ["zen-mode.nvim"] = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
@@ -217,6 +240,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+try_loadstring("\27LJ\2\n^\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\1\tview\0\1\0\1\tside\tleft\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
+time([[Config for nvim-tree.lua]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\nù\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\1\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\6\0\0\rmarkdown\20markdown_inline\15javascript\15typescript\btsx\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
+-- Config for: mdx.nvim
+time([[Config for mdx.nvim]], true)
+try_loadstring("\27LJ\2\nU\0\0\4\0\6\0\b6\0\0\0009\0\1\0009\0\2\0009\0\3\0'\2\4\0'\3\5\0B\0\3\1K\0\1\0\bmdx\rmarkdown\rregister\rlanguage\15treesitter\bvim\0", "config", "mdx.nvim")
+time([[Config for mdx.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

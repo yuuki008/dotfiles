@@ -79,11 +79,20 @@ nvim_lsp.flow.setup({
     capabilities = capabilities,
 })
 
-nvim_lsp.tsserver.setup({
+
+nvim_lsp.ts_ls.setup({
     on_attach = on_attach,
-    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "mdx" },
     cmd = { "typescript-language-server", "--stdio" },
     capabilities = capabilities,
+})
+
+-- terraform-ls
+nvim_lsp.terraformls.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "terraform", "hcl", "tf" },
+    cmd = { "terraform-ls", "serve" },
 })
 
 -- golang
@@ -117,6 +126,17 @@ nvim_lsp.clangd.setup({
     cmd = { "clangd", "--std=c++17" }
 })
 
+-- Ruby用のLSPサーバーを追加
+nvim_lsp.solargraph.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        solargraph = {
+            diagnostics = true,
+        },
+    },
+})
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
     update_in_insert = false,
@@ -141,6 +161,7 @@ vim.diagnostic.config({
     },
 })
 
+
 -- CursorHoldイベントで診断メッセージをフロート表示
 vim.o.updatetime = 250
 vim.cmd [[
@@ -149,3 +170,4 @@ vim.cmd [[
     autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus=false })
   augroup END
 ]]
+

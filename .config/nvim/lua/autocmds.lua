@@ -21,3 +21,10 @@ autocmd({ "BufReadPost" }, {
 	end,
 })
 
+
+vim.cmd([[
+  augroup mdx_filetype
+    autocmd!
+    autocmd BufRead,BufNewFile *.mdx set filetype=mdx
+  augroup END
+]])

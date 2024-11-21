@@ -78,8 +78,31 @@ return packer.startup(function(use)
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim" })
 
+
 	-- Treesitter
-	use({ "nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" } })
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        -- 必要な言語を指定
+        ensure_installed = { "markdown", "markdown_inline", "javascript", "typescript", "tsx" },
+        highlight = {
+          enable = true, -- シンタックスハイライトを有効化
+          additional_vim_regex_highlighting = false,
+        },
+      })
+    end,
+  })
+  use({
+    "davidmh/mdx.nvim", -- MDX専用プラグイン
+    dependencies = { "nvim-treesitter/nvim-treesitter" }, -- Treesitter依存
+    config = function()
+      -- MDXをMarkdownパーサーと関連付ける
+      vim.treesitter.language.register("markdown", "mdx")
+    end,
+  })
+
 	use({ "nvim-telescope/telescope-file-browser.nvim" })
 
 	use({ "windwp/nvim-ts-autotag" })
@@ -90,8 +113,27 @@ return packer.startup(function(use)
   -- Gdb
   use {'sakhnik/nvim-gdb', run = ':!./install.sh'}
 
-    -- Zen Mode
+  -- Zen Mode
   use({ "folke/zen-mode.nvim" })
+
+  -- Copilot
+	use({ "github/copilot.vim" })
+
+  -- Prisma
+  use({ "pantharshit00/vim-prisma" })
+
+  -- Nvim Tree
+  use({
+    'kyazdani42/nvim-tree.lua',
+    requires = 'kyazdani42/nvim-web-devicons', -- ファイルアイコンを表示するために必要
+    config = function()
+      require'nvim-tree'.setup {
+        view = {
+          side = 'left', -- 右側に表示
+        },
+      }
+    end
+  })
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
