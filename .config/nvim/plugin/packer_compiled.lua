@@ -74,6 +74,12 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["ChatGPT.nvim"] = {
+    config = { "\27LJ\2\nŒ\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\18openai_params\1\0\a\nmodel\ngpt-4\6n\3\1\ntop_p\4š³æÌ\t™³æý\3\16temperature\4š³æÌ\t™³¦þ\3\15max_tokens\3ÿ\31\21presence_penalty\3\0\22frequency_penalty\3\0\1\0\2\18openai_params\0\16api_key_cmd3op read op://Personal/OPEN_AI/key --no-newline\nsetup\fchatgpt\frequire\0" },
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/ChatGPT.nvim",
+    url = "https://github.com/jackMort/ChatGPT.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -114,11 +120,6 @@ _G.packer_plugins = {
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["copilot.vim"] = {
-    loaded = true,
-    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/copilot.vim",
-    url = "https://github.com/github/copilot.vim"
-  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
@@ -144,6 +145,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
     url = "https://github.com/EdenEast/nightfox.nvim"
+  },
+  ["nui.nvim"] = {
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nui.nvim",
+    url = "https://github.com/MunifTanjim/nui.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -182,7 +188,7 @@ _G.packer_plugins = {
     url = "https://github.com/kyazdani42/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    config = { "\27LJ\2\nù\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\1\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\6\0\0\rmarkdown\20markdown_inline\15javascript\15typescript\btsx\nsetup\28nvim-treesitter.configs\frequire\0" },
+    config = { "\27LJ\2\nð\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\1\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\a\0\0\vvimdoc\vluadoc\bvim\blua\15typescript\rmarkdown\nsetup\28nvim-treesitter.configs\frequire\0" },
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -222,6 +228,11 @@ _G.packer_plugins = {
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  ["trouble.nvim"] = {
+    loaded = true,
+    path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/Users/yu-home/.local/share/nvim/site/pack/packer/start/vim-commentary",
@@ -240,14 +251,18 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\nð\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\1\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\a\0\0\vvimdoc\vluadoc\bvim\blua\15typescript\rmarkdown\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
 try_loadstring("\27LJ\2\n^\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\tview\1\0\1\tview\0\1\0\1\tside\tleft\nsetup\14nvim-tree\frequire\0", "config", "nvim-tree.lua")
 time([[Config for nvim-tree.lua]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\nù\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\2\venable\2&additional_vim_regex_highlighting\1\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\6\0\0\rmarkdown\20markdown_inline\15javascript\15typescript\btsx\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
+-- Config for: ChatGPT.nvim
+time([[Config for ChatGPT.nvim]], true)
+try_loadstring("\27LJ\2\nŒ\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\18openai_params\1\0\a\nmodel\ngpt-4\6n\3\1\ntop_p\4š³æÌ\t™³æý\3\16temperature\4š³æÌ\t™³¦þ\3\15max_tokens\3ÿ\31\21presence_penalty\3\0\22frequency_penalty\3\0\1\0\2\18openai_params\0\16api_key_cmd3op read op://Personal/OPEN_AI/key --no-newline\nsetup\fchatgpt\frequire\0", "config", "ChatGPT.nvim")
+time([[Config for ChatGPT.nvim]], false)
 -- Config for: mdx.nvim
 time([[Config for mdx.nvim]], true)
 try_loadstring("\27LJ\2\nU\0\0\4\0\6\0\b6\0\0\0009\0\1\0009\0\2\0009\0\3\0'\2\4\0'\3\5\0B\0\3\1K\0\1\0\bmdx\rmarkdown\rregister\rlanguage\15treesitter\bvim\0", "config", "mdx.nvim")

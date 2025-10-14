@@ -85,20 +85,25 @@ return packer.startup(function(use)
     run = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
-        -- 必要な言語を指定
-        ensure_installed = { "markdown", "markdown_inline", "javascript", "typescript", "tsx" },
+        ensure_installed = {
+          "vimdoc",
+          "luadoc",
+          "vim",
+          "lua",
+          "typescript",
+          "markdown",
+        },
         highlight = {
-          enable = true, -- シンタックスハイライトを有効化
+          enable = true,
           additional_vim_regex_highlighting = false,
         },
       })
-    end,
+    end
   })
   use({
     "davidmh/mdx.nvim", -- MDX専用プラグイン
     dependencies = { "nvim-treesitter/nvim-treesitter" }, -- Treesitter依存
     config = function()
-      -- MDXをMarkdownパーサーと関連付ける
       vim.treesitter.language.register("markdown", "mdx")
     end,
   })
@@ -116,9 +121,6 @@ return packer.startup(function(use)
   -- Zen Mode
   use({ "folke/zen-mode.nvim" })
 
-  -- Copilot
-	use({ "github/copilot.vim" })
-
   -- Prisma
   use({ "pantharshit00/vim-prisma" })
 
@@ -134,6 +136,31 @@ return packer.startup(function(use)
       }
     end
   })
+
+  -- ChatGPT
+  use {
+    'jackMort/ChatGPT.nvim',
+    config = function()
+      require("chatgpt").setup({
+        api_key_cmd = "op read op://Personal/OPEN_AI/key --no-newline",
+        openai_params = {
+          model = "gpt-4",
+          frequency_penalty = 0,
+          presence_penalty = 0,
+          max_tokens = 4095,
+          temperature = 0.2,
+          top_p = 0.1,
+          n = 1,
+        },
+      })
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",         -- オプション
+      "nvim-telescope/telescope.nvim" -- オプション
+    }
+  }
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

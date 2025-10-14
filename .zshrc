@@ -2,13 +2,13 @@
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 # Homebrew
-if [ -d "/usr/local/bin" ]; then
-  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-elif [ -d "/opt/homebrew/bin" ]; then
+if [ -d "/opt/homebrew/bin" ]; then
   export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 fi
 
 # Custom paths
+export PATH="$HOME/.local/bin:$PATH"
+export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin
 export PATH="$HOME/dotfiles/packages/scripts/scripts:$PATH"
 export PATH="$HOME/.nodebrew/current/bin:$PATH"
 export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
@@ -39,7 +39,7 @@ source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.in
 source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
 # Aliases
-alias code="open -a 'Visual Studio Code'"
+alias code="open -a 'Cursor'"
 alias dc='docker-compose'
 alias cl="clear"
 
@@ -59,3 +59,8 @@ alias lg="lazygit"
 
 # starship
 eval "$(starship init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
