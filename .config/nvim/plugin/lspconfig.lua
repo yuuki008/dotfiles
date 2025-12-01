@@ -1,173 +1,141 @@
-local status, nvim_lsp = pcall(require, "lspconfig")
-if not status then
-    return
-end
+-- Neovim 0.11+ の新しい LSP 設定形式
 
-local protocol = require("vim.lsp.protocol")
+-- キーマッピングとオプションの設定
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
+        -- Mappings
+        local opts = { noremap = true, silent = true, buffer = bufnr }
 
-    --Enable completion triggered by <c-x><c-o>
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 
-    -- Mappings.
-    local opts = { noremap = true, silent = true }
+        -- Formatting
+        if client.server_capabilities.documentFormattingProvider then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = vim.api.nvim_create_augroup("Format_" .. bufnr, { clear = true }),
+                buffer = bufnr,
+                callback = function()
+                    vim.lsp.buf.format()
+                end,
+            })
+        end
+    end,
+})
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-    buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-    -- Lspsaga の方を使うのでここはコメントアウト
-    --buf_set_keymap("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-
-    -- formatting
-    if client.server_capabilities.documentFormattingProvider then
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = vim.api.nvim_create_augroup("Format", { clear = true }),
-            buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.format()
-            end,
-        })
-    end
-
-    -- To send formatted stream to null-ls
-    --client.resolved_capabilities.document_formatting = false
-end
-
-protocol.CompletionItemKind = {
-    "", -- Text
-    "", -- Method
-    "", -- Function
-    "", -- Constructor
-    "", -- Field
-    "", -- Variable
-    "", -- Class
-    "ﰮ", -- Interface
-    "", -- Module
-    "", -- Property
-    "", -- Unit
-    "", -- Value
-    "", -- Enum
-    "", -- Keyword
-    "﬌", -- Snippet
-    "", -- Color
-    "", -- File
-    "", -- Reference
-    "", -- Folder
-    "", -- EnumMember
-    "", -- Constant
-    "", -- Struct
-    "", -- Event
-    "ﬦ", -- Operator
-    "", -- TypeParameter
-}
-
--- Set up completion using nvim_cmp with LSP source
+-- Completion capabilities
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-nvim_lsp.flow.setup({
-    on_attach = on_attach,
+-- LSP サーバーの設定
+vim.lsp.config.flow = {
+    cmd = { 'flow', 'lsp' },
+    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx' },
+    root_markers = { '.flowconfig' },
     capabilities = capabilities,
-})
+}
 
-
-nvim_lsp.ts_ls.setup({
-    on_attach = on_attach,
-    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "mdx" },
+vim.lsp.config.ts_ls = {
     cmd = { "typescript-language-server", "--stdio" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "mdx" },
+    root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
     capabilities = capabilities,
-})
+}
 
--- terraform-ls
-nvim_lsp.terraformls.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "terraform", "hcl", "tf" },
+vim.lsp.config.terraformls = {
     cmd = { "terraform-ls", "serve" },
-})
+    filetypes = { "terraform", "hcl", "tf" },
+    root_markers = { '.terraform', '.git' },
+    capabilities = capabilities,
+}
 
--- golang
-nvim_lsp["gopls"].setup({ on_attach = on_attach })
+vim.lsp.config.gopls = {
+    cmd = { 'gopls' },
+    filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+    root_markers = { 'go.work', 'go.mod', '.git' },
+    capabilities = capabilities,
+}
 
-nvim_lsp.sourcekit.setup({
-    on_attach = on_attach,
-})
+vim.lsp.config.sourcekit = {
+    cmd = { 'sourcekit-lsp' },
+    filetypes = { 'swift', 'objective-c', 'objective-cpp' },
+    root_markers = { 'Package.swift', '.git' },
+    capabilities = capabilities,
+}
 
-nvim_lsp.lua_ls.setup({
-    on_attach = on_attach,
+vim.lsp.config.lua_ls = {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
     settings = {
         Lua = {
             diagnostics = {
-                -- Get the language server to recognize the `vim` global
                 globals = { "vim" },
             },
             workspace = {
-                -- Make the server aware of Neovim runtime files
                 library = vim.api.nvim_get_runtime_file("", true),
                 checkThirdParty = false,
             },
         },
     },
-})
-
--- clangd 設定を追加
-nvim_lsp.clangd.setup({
-    on_attach = on_attach,
     capabilities = capabilities,
-    cmd = { "clangd", "--std=c++17" }
-})
+}
 
--- Ruby用のLSPサーバーを追加
-nvim_lsp.solargraph.setup({
-    on_attach = on_attach,
+vim.lsp.config.clangd = {
+    cmd = { "clangd", "--std=c++17" },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+    root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git' },
     capabilities = capabilities,
+}
+
+vim.lsp.config.solargraph = {
+    cmd = { 'solargraph', 'stdio' },
+    filetypes = { 'ruby' },
+    root_markers = { 'Gemfile', '.git' },
     settings = {
         solargraph = {
             diagnostics = true,
         },
     },
-})
+    capabilities = capabilities,
+}
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    update_in_insert = false,
-    virtual_text = { spacing = 4, prefix = "●" },
-    severity_sort = true,
-})
+-- LSPサーバーを有効化
+vim.lsp.enable('flow')
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('terraformls')
+vim.lsp.enable('gopls')
+vim.lsp.enable('sourcekit')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('clangd')
+vim.lsp.enable('solargraph')
 
--- Diagnostic symbols in the sign column (gutter)
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
-
+-- Diagnostic の設定
 vim.diagnostic.config({
     virtual_text = {
         prefix = "●",
     },
     update_in_insert = true,
     float = {
-        source = "always", -- Or "if_many"
+        source = "always",
     },
 })
 
+-- Diagnostic symbols
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
 -- CursorHoldイベントで診断メッセージをフロート表示
 vim.o.updatetime = 250
-vim.cmd [[
-  augroup LspDiagnostics
-    autocmd!
-    autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus=false })
-  augroup END
-]]
-
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    callback = function()
+        vim.diagnostic.open_float(nil, { focus = false })
+    end,
+})
