@@ -14,10 +14,10 @@ brew "zsh"               # シェル
 brew "jq"                # JSON プロセッサ
 brew "tree"              # ディレクトリ構造表示ツール
 brew "ranger"            # TUI ファイル管理アプリケーション
+brew "claude-code"
+
 # Casks
 cask "google-cloud-sdk"
 cask "google-japanese-ime"
 cask "chromedriver"
 cask "ngrok"
-tap "anthropics/claude"
-cast "claude"
