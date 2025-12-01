@@ -58,7 +58,7 @@ keymap("n", "Y", "y$", opts)
 -- <Space>q で強制終了
 keymap("n", "<Space>q", ":<C-u>q!<Return>", opts)
 
--- ESC*2 でハイライトやめる
+-- ESC*4 でハイライトやめる
 keymap("n", "<Esc><Esc>", ":<C-u>set nohlsearch<Return>", opts)
 
 -- Insert --
@@ -76,8 +76,8 @@ keymap("v", ">", ">gv", opts)
 -- ビジュアルモード時vで行末まで選択
 keymap("v", "v", "$h", opts)
 
--- 0番レジスタを使いやすくした
-keymap("v", "<C-p>", '"0p', opts)
+-- 2番レジスタを使いやすくした
+keymap("v", "<C-p>", '"2p', opts)
 
 -- Telescope のキーマッピング
 keymap("n", "<C-p>", ':Telescope find_files<CR>', opts)
@@ -91,36 +91,3 @@ keymap("n", "<Space>e", ":NvimTreeToggle<CR>", opts)
 
 -- Terminal --
 keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
-
--- ChatGPT.nvim のキーマップ設定
--- 以下のキー割り当てを既存のキーマップ設定の後に追加します
-
--- Normal モードでの ChatGPT キーマップ
-keymap("n", "<Space>cc", ":ChatGPT<CR>", opts) -- ChatGPT ウィンドウを開く
-keymap("n", "<Space>ce", ":ChatGPTEditWithInstructions<CR>", opts) -- 指示付きで編集ウィンドウを開く
-keymap("n", "<Space>cg", ":ChatGPTRun grammar_correction<CR>", opts) -- 文法修正アクションを実行
-keymap("n", "<Space>ct", ":ChatGPTRun translate<CR>", opts) -- 翻訳アクションを実行
-keymap("n", "<Space>ck", ":ChatGPTRun keywords<CR>", opts) -- キーワード生成アクションを実行
-keymap("n", "<Space>cd", ":ChatGPTRun docstring<CR>", opts) -- Docstring 作成アクションを実行
-keymap("n", "<Space>ca", ":ChatGPTRun add_tests<CR>", opts) -- テスト追加アクションを実行
-keymap("n", "<Space>co", ":ChatGPTRun optimize_code<CR>", opts) -- コード最適化アクションを実行
-keymap("n", "<Space>cs", ":ChatGPTRun summarize<CR>", opts) -- 要約アクションを実行
-keymap("n", "<Space>cf", ":ChatGPTRun fix_bugs<CR>", opts) -- バグ修正アクションを実行
-keymap("n", "<Space>cx", ":ChatGPTRun explain_code<CR>", opts) -- コード説明アクションを実行
-keymap("n", "<Space>cr", ":ChatGPTRun roxygen_edit<CR>", opts) -- Roxygen 編集アクションを実行
-keymap("n", "<Space>cl", ":ChatGPTRun code_readability_analysis<CR>", opts) -- コード可読性分析アクションを実行
-
--- Visual モードでの ChatGPT キーマップ
-keymap("v", "<Space>ce", ":ChatGPTEditWithInstructions<CR>", opts) -- 指示付きで編集ウィンドウを開く
-keymap("v", "<Space>cg", ":ChatGPTRun grammar_correction<CR>", opts) -- 文法修正アクションを実行
-keymap("v", "<Space>ct", ":ChatGPTRun translate<CR>", opts) -- 翻訳アクションを実行
-keymap("v", "<Space>ck", ":ChatGPTRun keywords<CR>", opts) -- キーワード生成アクションを実行
-keymap("v", "<Space>cd", ":ChatGPTRun docstring<CR>", opts) -- Docstring 作成アクションを実行
-keymap("v", "<Space>ca", ":ChatGPTRun add_tests<CR>", opts) -- テスト追加アクションを実行
-keymap("v", "<Space>co", ":ChatGPTRun optimize_code<CR>", opts) -- コード最適化アクションを実行
-keymap("v", "<Space>cs", ":ChatGPTRun summarize<CR>", opts) -- 要約アクションを実行
-keymap("v", "<Space>cf", ":ChatGPTRun fix_bugs<CR>", opts) -- バグ修正アクションを実行
-keymap("v", "<Space>cx", ":ChatGPTRun explain_code<CR>", opts) -- コード説明アクションを実行
-keymap("v", "<Space>cr", ":ChatGPTRun roxygen_edit<CR>", opts) -- Roxygen 編集アクションを実行
-keymap("v", "<Space>cl", ":ChatGPTRun code_readability_analysis<CR>", opts) -- コード可読性分析アクションを実行
-
