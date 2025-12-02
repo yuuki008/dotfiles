@@ -10,7 +10,6 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin
 export PATH="$HOME/dotfiles/packages/scripts/scripts:$PATH"
-export PATH="$HOME/.nodebrew/current/bin:$PATH"
 export PATH="$HOME/.rbenv/shims:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.pyenv/shims:$PATH"
@@ -43,3 +42,29 @@ alias lg="lazygit"
 
 # starship
 eval "$(starship init zsh)"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Automatically switch Node.js version when entering a directory with .nvmrc
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
