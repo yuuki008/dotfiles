@@ -18,6 +18,5 @@ brew "claude-code"
 
 # Casks
 cask "google-cloud-sdk"
-cask "google-japanese-ime"
 cask "chromedriver"
 cask "ngrok"
