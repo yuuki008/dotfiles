@@ -104,6 +104,28 @@ vim.lsp.config.solargraph = {
     capabilities = capabilities,
 }
 
+vim.lsp.config.tailwindcss = {
+    cmd = { 'tailwindcss-language-server', '--stdio' },
+    filetypes = { 'html', 'css', 'scss', 'sass', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue', 'svelte', 'astro', 'mdx' },
+    root_markers = { 'tailwind.config.js', 'tailwind.config.cjs', 'tailwind.config.mjs', 'tailwind.config.ts', 'postcss.config.js', 'postcss.config.cjs', 'package.json', '.git' },
+    settings = {
+        tailwindCSS = {
+            classAttributes = { 'class', 'className', 'classList', 'ngClass' },
+            lint = {
+                cssConflict = 'warning',
+                invalidApply = 'error',
+                invalidConfigPath = 'error',
+                invalidScreen = 'error',
+                invalidTailwindDirective = 'error',
+                invalidVariant = 'error',
+                recommendedVariantOrder = 'warning',
+            },
+            validate = true,
+        },
+    },
+    capabilities = capabilities,
+}
+
 -- LSPサーバーを有効化
 vim.lsp.enable('flow')
 vim.lsp.enable('ts_ls')
@@ -113,6 +135,7 @@ vim.lsp.enable('sourcekit')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('clangd')
 vim.lsp.enable('solargraph')
+vim.lsp.enable('tailwindcss')
 
 -- Diagnostic の設定
 vim.diagnostic.config({
