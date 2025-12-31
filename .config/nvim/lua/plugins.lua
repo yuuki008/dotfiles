@@ -1,6 +1,6 @@
 local fn = vim.fn
 
--- Automatically install packer
+-- Packerを自動インストール
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
 	PACKER_BOOTSTRAP = fn.system({
@@ -11,11 +11,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		"https://github.com/wbthomason/packer.nvim",
 		install_path,
 	})
-	print("Installing packer close and reopen Neovim...")
+	print("Packerをインストール中... Neovimを再起動してください。")
 	vim.cmd([[packadd packer.nvim]])
 end
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
+-- plugins.luaを保存したときに自動的にNeovimをリロードしてPackerSyncを実行
+-- これにより、プラグインを追加・削除したときに自動的にインストール/アンインストールされる
 vim.cmd([[
   augroup packer_user_config
     autocmd!
@@ -23,13 +24,13 @@ vim.cmd([[
   augroup end
 ]])
 
--- Use a protected call so we don't error out on first use
+-- 保護された呼び出しを使用（初回使用時にエラーを出さないため）
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
 	return
 end
 
--- Have packer use a popup window
+-- Packerをポップアップウィンドウで表示
 packer.init({
 	display = {
 		open_fn = function()
@@ -38,65 +39,65 @@ packer.init({
 	},
 })
 
--- Install your plugins here
+-- プラグインのインストール
 return packer.startup(function(use)
-	-- My plugins here
+	-- 必須プラグイン
 
-	use({ "wbthomason/packer.nvim" })
-	use({ "nvim-lua/plenary.nvim" }) -- Common utilities
+	use({ "wbthomason/packer.nvim" }) -- パッケージマネージャー自体
+	use({ "nvim-lua/plenary.nvim" })  -- 共通ユーティリティ
 
-	-- Colorschemes
-	use({ "EdenEast/nightfox.nvim" }) -- Color scheme
+	-- カラースキーム
+	use({ "EdenEast/nightfox.nvim" })
 
-	use({ "nvim-lualine/lualine.nvim" }) -- Statusline
-	use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
-	use({ "kyazdani42/nvim-web-devicons" }) -- File icons
-	use({ "akinsho/bufferline.nvim" })
+	use({ "nvim-lualine/lualine.nvim" })       -- ステータスライン
+	use({ "windwp/nvim-autopairs" })           -- 括弧の自動補完（cmpとtreesitterと統合）
+	use({ "kyazdani42/nvim-web-devicons" })    -- ファイルアイコン
+	use({ "akinsho/bufferline.nvim" })         -- バッファライン
 
-	-- cmp plugins
-	use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
-	use({ "hrsh7th/cmp-buffer" }) -- buffer completions
-	use({ "hrsh7th/cmp-path" }) -- path completions
-	use({ "hrsh7th/cmp-cmdline" }) -- cmdline completions
-	use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
-	use({ "hrsh7th/cmp-nvim-lsp" })
-	use({ "hrsh7th/cmp-nvim-lua" })
-	use({ "onsails/lspkind-nvim" })
+	-- 補完プラグイン
+	use({ "hrsh7th/nvim-cmp" })          -- 補完エンジン本体
+	use({ "hrsh7th/cmp-buffer" })        -- バッファからの補完
+	use({ "hrsh7th/cmp-path" })          -- パス補完
+	use({ "hrsh7th/cmp-cmdline" })       -- コマンドライン補完
+	use({ "saadparwaiz1/cmp_luasnip" })  -- スニペット補完
+	use({ "hrsh7th/cmp-nvim-lsp" })      -- LSPからの補完
+	use({ "hrsh7th/cmp-nvim-lua" })      -- Neovim Lua API補完
+	use({ "onsails/lspkind-nvim" })      -- 補完アイテムにアイコンを追加
 
-	-- snippets
-	use({ "L3MON4D3/LuaSnip" }) -- snippet engine
+	-- スニペット
+	use({ "L3MON4D3/LuaSnip" })
 
 	-- LSP
-	use({ "neovim/nvim-lspconfig" }) -- enable LSP
-	use({ "williamboman/nvim-lsp-installer" }) -- simple to use language server installer
-	use({ "nvimtools/none-ls.nvim" }) -- for formatters and linters
-	use({ "glepnir/lspsaga.nvim" }) -- LSP UIs
+	use({ "neovim/nvim-lspconfig" })              -- LSP設定
+	use({ "williamboman/nvim-lsp-installer" })    -- 言語サーバーインストーラー
+	use({ "nvimtools/none-ls.nvim" })             -- フォーマッターとリンター用
+	use({ "glepnir/lspsaga.nvim" })               -- LSP UI拡張
 
-	-- Formatter
+	-- フォーマッター
 	use({ "MunifTanjim/prettier.nvim" })
 
-	-- Telescope
+	-- ファジーファインダー
 	use({ "nvim-telescope/telescope.nvim" })
 	use({ "nvim-telescope/telescope-file-browser.nvim" })
 
 
-	-- Treesitter
+	-- 構文解析（シンタックスハイライト向上）
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
-          "vimdoc",
-          "luadoc",
-          "vim",
-          "lua",
-          "typescript",
-          "markdown",
+          "vimdoc",     -- Vimドキュメント
+          "luadoc",     -- Luaドキュメント
+          "vim",        -- Vimscript
+          "lua",        -- Lua
+          "typescript", -- TypeScript
+          "markdown",   -- Markdown
         },
         highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
+          enable = true, -- シンタックスハイライトを有効化
+          additional_vim_regex_highlighting = false, -- Vim正規表現ハイライトを無効化
         },
       })
     end
@@ -110,35 +111,35 @@ return packer.startup(function(use)
   })
 
 
-	use({ "windwp/nvim-ts-autotag" })
+	use({ "windwp/nvim-ts-autotag" }) -- HTMLタグの自動閉じ
 
-  -- Commentary
+  -- コメントアウトプラグイン
 	use({ "tpope/vim-commentary" })
 
-  -- Gdb
+  -- デバッガ（GDB）
   use {'sakhnik/nvim-gdb', run = ':!./install.sh'}
 
-  -- Zen Mode
+  -- 集中執筆モード
   use({ "folke/zen-mode.nvim" })
 
-  -- Prisma
+  -- Prisma構文サポート
   use({ "pantharshit00/vim-prisma" })
 
-  -- Nvim Tree
+  -- ファイルツリー
   use({
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons', -- ファイルアイコンを表示するために必要
     config = function()
       require'nvim-tree'.setup {
         view = {
-          side = 'left', -- 右側に表示
+          side = 'left', -- 左側に表示
         },
       }
     end
   })
 
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
+	-- Packerクローン後に設定を自動セットアップ
+	-- 全プラグインの最後に配置すること
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end

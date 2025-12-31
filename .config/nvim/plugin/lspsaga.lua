@@ -1,72 +1,75 @@
+-- Lspsaga（LSP UI拡張）の読み込み
 local status, saga = pcall(require, "lspsaga")
 if (not status) then return end
 
+-- Lspsagaの設定
 saga.setup({
   ui = {
-    winblend = 10,
-    border = 'rounded',
+    winblend = 10,              -- ウィンドウの透明度
+    border = 'rounded',         -- 角丸ボーダー
     colors = {
-      normal_bg = '#002b36'
+      normal_bg = '#002b36'     -- 背景色
     }
   }
 })
 
 local keymap = vim.keymap.set
 
--- LSP finder - Find the symbol's definition
--- If there is no definition, it will instead be hidden
--- When you use an action in finder like "open vsplit",
--- you can use <C-t> to jump back
+-- LSPファインダー - シンボルの定義を検索
+-- 定義が見つからない場合は非表示になる
+-- "open vsplit"などのアクションを使用した後、<C-t>で元の場所に戻れる
 keymap("n", "gf", "<cmd>Lspsaga lsp_finder<CR>")
 
--- Code action
+-- コードアクション（クイックフィックス、リファクタリングなど）
 keymap({"n","v"}, "ga", "<cmd>Lspsaga code_action<CR>")
 
--- Rename all occurrences of the hovered word for the entire file
+-- ファイル全体のカーソル下の単語を全てリネーム
 keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
 
--- Rename all occurrences of the hovered word for the selected files
+-- プロジェクト全体のカーソル下の単語を全てリネーム
+-- 注意: 2つの"gr"キーマップが定義されているため、実際には後者のプロジェクト全体リネームのみが有効
 keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
 
--- Peek definition
--- You can edit the file containing the definition in the floating window
--- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
--- It also supports tagstack
--- Use <C-t> to jump back
+-- 定義をプレビュー表示
+-- フローティングウィンドウ内で定義ファイルを編集可能
+-- open/vsplit等の操作もサポート（definition_action_keysを参照）
+-- タグスタックにも対応
+-- <C-t>で元の場所に戻れる
 keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
 
--- Go to definition
+-- 定義へジャンプ
+-- 注意: 2つの"gd"キーマップが定義されているため、実際には後者の定義ジャンプのみが有効
 keymap("n","gd", "<cmd>Lspsaga goto_definition<CR>")
 
--- Peek type definition
--- You can edit the file containing the type definition in the floating window
--- It also supports open/vsplit/etc operations, do refer to "definition_action_keys"
--- It also supports tagstack
--- Use <C-t> to jump back
+-- 型定義をプレビュー表示
+-- フローティングウィンドウ内で型定義ファイルを編集可能
+-- open/vsplit等の操作もサポート（definition_action_keysを参照）
+-- タグスタックにも対応
+-- <C-t>で元の場所に戻れる
 keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
 
--- Go to type definition
+-- 型定義へジャンプ
+-- 注意: 2つの"gt"キーマップが定義されているため、実際には後者の型定義ジャンプのみが有効
 keymap("n","gt", "<cmd>Lspsaga goto_type_definition<CR>")
 
 
--- Show line diagnostics
--- You can pass argument ++unfocus to
--- unfocus the show_line_diagnostics floating window
+-- 行の診断メッセージを表示
+-- ++unfocus引数を渡すとフローティングウィンドウにフォーカスしない
 keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
 
--- Show cursor diagnostics
--- Like show_line_diagnostics, it supports passing the ++unfocus argument
+-- カーソル位置の診断メッセージを表示
+-- show_line_diagnosticsと同様に++unfocus引数をサポート
 keymap("n", "<leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
 
--- Show buffer diagnostics
+-- バッファ全体の診断メッセージを表示
 keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
 
--- Diagnostic jump
--- You can use <C-o> to jump back to your previous location
+-- 診断メッセージ間をジャンプ
+-- <C-o>で前の場所に戻れる
 keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 
--- Diagnostic jump with filters such as only jumping to an error
+-- エラーのみにフィルタして診断メッセージ間をジャンプ
 keymap("n", "[E", function()
   require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
 end)
@@ -74,27 +77,24 @@ keymap("n", "]E", function()
   require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
 end)
 
--- Toggle outline
+-- アウトライン（シンボルツリー）の表示切り替え
 keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
 
--- Hover Doc
--- If there is no hover doc,
--- there will be a notification stating that
--- there is no information available.
--- To disable it just use ":Lspsaga hover_doc ++quiet"
--- Pressing the key twice will enter the hover window
+-- ホバードキュメント（カーソル位置のドキュメント表示）
+-- ドキュメントが無い場合は通知が表示される
+-- 無効化するには ":Lspsaga hover_doc ++quiet" を使用
+-- キーを2回押すとホバーウィンドウに入れる
 keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
 
--- If you want to keep the hover window in the top right hand corner,
--- you can pass the ++keep argument
--- Note that if you use hover with ++keep, pressing this key again will
--- close the hover window. If you want to jump to the hover window
--- you should use the wincmd command "<C-w>w"
+-- ホバーウィンドウを右上に固定表示したい場合は++keep引数を渡す
+-- 注意1: ++keepを使用した場合、再度キーを押すとホバーウィンドウが閉じる
+-- 注意2: ホバーウィンドウにジャンプしたい場合は "<C-w>w" を使用
+-- 注意3: 2つの"K"キーマップが定義されているため、実際には後者の++keep版のみが有効
 keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 
--- Call hierarchy
-keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
+-- コールヒエラルキー（関数の呼び出し関係）
+keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>") -- この関数を呼び出している場所
+keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>") -- この関数が呼び出している関数
 
--- Floating terminal
+-- フローティングターミナルの表示切り替え
 keymap({"n", "t"}, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")
