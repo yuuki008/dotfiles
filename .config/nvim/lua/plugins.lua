@@ -88,12 +88,17 @@ return packer.startup(function(use)
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
-          "vimdoc",     -- Vimドキュメント
-          "luadoc",     -- Luaドキュメント
-          "vim",        -- Vimscript
-          "lua",        -- Lua
-          "typescript", -- TypeScript
-          "markdown",   -- Markdown
+          "vimdoc",       -- Vimドキュメント
+          "luadoc",       -- Luaドキュメント
+          "vim",          -- Vimscript
+          "lua",          -- Lua
+          "typescript",   -- TypeScript
+          "tsx",          -- TypeScript JSX (React)
+          "javascript",   -- JavaScript
+          "jsx",          -- JavaScript JSX (React)
+          "json",         -- JSON
+          "markdown",     -- Markdown
+          "markdown_inline", -- Markdown inline code
         },
         highlight = {
           enable = true, -- シンタックスハイライトを有効化

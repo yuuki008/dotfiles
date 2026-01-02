@@ -16,6 +16,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)      -- 宣言へジャンプ
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)   -- 実装へジャンプ
 
+        -- 以下はlspsagaで上書きされるが、lspsagaが無効な場合のフォールバック
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)       -- 定義へジャンプ
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)       -- 参照を表示
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)             -- ホバー情報
+
         -- フォーマット機能
         -- LSPサーバーがフォーマット機能を持っている場合、保存時に自動フォーマット
         if client.server_capabilities.documentFormattingProvider then
@@ -46,9 +51,33 @@ vim.lsp.config.flow = {
 -- TypeScript/JavaScript言語サーバー（MDXもサポート）
 vim.lsp.config.ts_ls = {
     cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "mdx" },
+    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "mdx" },
     root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
     capabilities = capabilities,
+    settings = {
+        typescript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',  -- パラメータ名のヒント表示
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,  -- 関数パラメータの型ヒント
+                includeInlayVariableTypeHints = true,  -- 変数の型ヒント
+                includeInlayPropertyDeclarationTypeHints = true,  -- プロパティの型ヒント
+                includeInlayFunctionLikeReturnTypeHints = true,  -- 関数の戻り値型ヒント
+                includeInlayEnumMemberValueHints = true,  -- Enumメンバーの値ヒント
+            },
+        },
+        javascript = {
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+    },
 }
 
 -- Terraform言語サーバー

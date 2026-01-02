@@ -23,8 +23,10 @@ cmp.setup({
   }),
   -- 補完ソースの設定（優先順位順）
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },  -- LSPからの補完
-    { name = 'buffer' },    -- バッファからの補完
+    { name = 'nvim_lsp' },   -- LSPからの補完（最優先）
+    { name = 'luasnip' },    -- スニペット補完
+  }, {
+    { name = 'buffer' },     -- バッファからの補完（LSPがない場合のフォールバック）
   }),
   -- 補完メニューのフォーマット設定
   formatting = {

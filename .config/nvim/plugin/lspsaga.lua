@@ -15,42 +15,22 @@ saga.setup({
 
 local keymap = vim.keymap.set
 
--- LSPファインダー - シンボルの定義を検索
--- 定義が見つからない場合は非表示になる
--- "open vsplit"などのアクションを使用した後、<C-t>で元の場所に戻れる
-keymap("n", "gf", "<cmd>Lspsaga lsp_finder<CR>")
+-- LSPファインダー - シンボルの参照と定義を一度に検索
+keymap("n", "gf", "<cmd>Lspsaga finder<CR>")
 
 -- コードアクション（クイックフィックス、リファクタリングなど）
 keymap({"n","v"}, "ga", "<cmd>Lspsaga code_action<CR>")
 
--- ファイル全体のカーソル下の単語を全てリネーム
-keymap("n", "gr", "<cmd>Lspsaga rename<CR>")
+-- リネーム機能
+keymap("n", "gR", "<cmd>Lspsaga rename ++project<CR>")  -- プロジェクト全体リネーム
 
--- プロジェクト全体のカーソル下の単語を全てリネーム
--- 注意: 2つの"gr"キーマップが定義されているため、実際には後者のプロジェクト全体リネームのみが有効
-keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
+-- 定義へのナビゲーション
+keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>")   -- 定義へジャンプ
+keymap("n", "gp", "<cmd>Lspsaga peek_definition<CR>")   -- 定義をプレビュー（フローティングウィンドウ）
 
--- 定義をプレビュー表示
--- フローティングウィンドウ内で定義ファイルを編集可能
--- open/vsplit等の操作もサポート（definition_action_keysを参照）
--- タグスタックにも対応
--- <C-t>で元の場所に戻れる
-keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
-
--- 定義へジャンプ
--- 注意: 2つの"gd"キーマップが定義されているため、実際には後者の定義ジャンプのみが有効
-keymap("n","gd", "<cmd>Lspsaga goto_definition<CR>")
-
--- 型定義をプレビュー表示
--- フローティングウィンドウ内で型定義ファイルを編集可能
--- open/vsplit等の操作もサポート（definition_action_keysを参照）
--- タグスタックにも対応
--- <C-t>で元の場所に戻れる
-keymap("n", "gt", "<cmd>Lspsaga peek_type_definition<CR>")
-
--- 型定義へジャンプ
--- 注意: 2つの"gt"キーマップが定義されているため、実際には後者の型定義ジャンプのみが有効
-keymap("n","gt", "<cmd>Lspsaga goto_type_definition<CR>")
+-- 型定義へのナビゲーション
+keymap("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")   -- 型定義へジャンプ
+keymap("n", "gT", "<cmd>Lspsaga peek_type_definition<CR>")   -- 型定義をプレビュー
 
 
 -- 行の診断メッセージを表示
@@ -81,15 +61,7 @@ end)
 keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
 
 -- ホバードキュメント（カーソル位置のドキュメント表示）
--- ドキュメントが無い場合は通知が表示される
--- 無効化するには ":Lspsaga hover_doc ++quiet" を使用
--- キーを2回押すとホバーウィンドウに入れる
-keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-
--- ホバーウィンドウを右上に固定表示したい場合は++keep引数を渡す
--- 注意1: ++keepを使用した場合、再度キーを押すとホバーウィンドウが閉じる
--- 注意2: ホバーウィンドウにジャンプしたい場合は "<C-w>w" を使用
--- 注意3: 2つの"K"キーマップが定義されているため、実際には後者の++keep版のみが有効
+-- ++keep: ウィンドウを固定表示、再度押すと閉じる
 keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 
 -- コールヒエラルキー（関数の呼び出し関係）

@@ -3,6 +3,7 @@
 # Formulae
 brew "git"               # バージョン管理ツール
 brew "node"              # JavaScript ランタイム
+brew "typescript-language-server"  # TypeScript LSP サーバー
 brew "cmake"             # ビルドシステム
 brew "gcc"               # コンパイラ
 brew "neovim"            # テキストエディタ
