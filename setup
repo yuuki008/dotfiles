@@ -37,3 +37,8 @@ ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf" "$HOME/.tmux.conf"
 ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf.osx" "$HOME/.tmux.conf.osx"
 ln -sf "$HOME/dotfiles/.config/tmux/tmux.powerline.conf" "$HOME/.tmux.powerline.conf"
 
+# Claude Code settings
+mkdir -p "$HOME/.claude"
+ln -sf "$HOME/dotfiles/.claude/settings.json" "$HOME/.claude/settings.json"
+ln -sf "$HOME/dotfiles/.claude/statusline.sh" "$HOME/.claude/statusline.sh"
+
