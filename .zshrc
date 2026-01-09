@@ -10,7 +10,14 @@ fi
 
 # カスタムパス設定
 export PATH="$HOME/.local/bin:$PATH"                                               # ローカルバイナリ
-export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin                       # Go関連
+
+# Go言語の環境設定
+export GOPATH="$HOME/go"                                                           # Goワークスペース
+export GOROOT="$(brew --prefix go)/libexec" 2>/dev/null || export GOROOT="/usr/local/go"  # Goインストールディレクトリ
+if command -v go 1>/dev/null 2>&1; then
+  export PATH="$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin"                   # Goバイナリパス
+fi
+
 export PATH="$HOME/dotfiles/packages/scripts/scripts:$PATH"                        # 自作スクリプト
 export PATH="$HOME/.rbenv/shims:$PATH"                                             # rbenv（Ruby）
 export PATH="$HOME/.rbenv/bin:$PATH"

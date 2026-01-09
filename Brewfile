@@ -17,6 +17,8 @@ brew "tree"              # ディレクトリ構造表示ツール
 brew "ranger"            # TUI ファイル管理アプリケーション
 brew "claude-code"
 brew "gh"                # Github Cli
+brew "go"                # Go プログラミング言語
+brew "gopls"             # Go LSP サーバー
 
 # Casks
 cask "google-cloud-sdk"
