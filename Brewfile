@@ -16,6 +16,7 @@ brew "jq"                # JSON プロセッサ
 brew "tree"              # ディレクトリ構造表示ツール
 brew "ranger"            # TUI ファイル管理アプリケーション
 brew "claude-code"
+brew "gh"                # Github Cli
 
 # Casks
 cask "google-cloud-sdk"
