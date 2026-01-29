@@ -76,6 +76,9 @@ return packer.startup(function(use)
 	-- フォーマッター
 	use({ "MunifTanjim/prettier.nvim" })
 
+	-- Git統合
+	use({ "lewis6991/gitsigns.nvim" })
+
 	-- ファジーファインダー
 	use({ "nvim-telescope/telescope.nvim" })
 	use({ "nvim-telescope/telescope-file-browser.nvim" })
@@ -95,7 +98,6 @@ return packer.startup(function(use)
           "typescript",   -- TypeScript
           "tsx",          -- TypeScript JSX (React)
           "javascript",   -- JavaScript
-          "jsx",          -- JavaScript JSX (React)
           "json",         -- JSON
           "markdown",     -- Markdown
           "markdown_inline", -- Markdown inline code
