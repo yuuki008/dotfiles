@@ -4,6 +4,7 @@
     "gopls-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": false,
+  "enterForNewline": true,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
