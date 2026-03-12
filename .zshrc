@@ -53,6 +53,9 @@ alias lg="lazygit"
 # Starship（プロンプトテーマ）の初期化
 eval "$(starship init zsh)"
 
+# Direnv の設定
+eval "$(direnv hook zsh)"
+
 # nvm（Node.jsバージョン管理）の設定
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                      # nvmスクリプトを読み込み

@@ -3,48 +3,114 @@
 set -e
 
 cd "$HOME"
-
-# Install Homebrew
-if [ ! -f /usr/local/bin/brew ]; then
-  echo "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-else
-  echo "Homebrew already installed."
-fi
-
-# Clone my dotfiles
-if [ ! -d "$HOME/dotfiles" ]; then
-  echo "Cloning dotfiles..."
-  git clone git@github.com:yuuki008/dotfiles.git
-fi
-
-# Install some software
-echo "Installing some software & library..."
-brew bundle -v --file="$HOME/dotfiles/Brewfile"
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Source zsh configuration
 echo "zshの読み込み"
 source "$HOME/.zshrc"
 
-# Symlink dotfiles
-echo "シンボリックリンクを貼る"
-echo "Symlinking dotfiles..."
-mkdir -p "$HOME/.config"  # Ensure .config directory exists
+# ==================================================
+# Homebrew
+# ==================================================
+if ! command -v brew &> /dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # アーキテクチャに応じてパスを設定
+    if [[ -f /opt/homebrew/bin/brew ]]; then
+        # Apple Silicon
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -f /usr/local/bin/brew ]]; then
+        # Intel Mac
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+fi
 
-ln -sf "$HOME/dotfiles/.config/nvim" "$HOME/.config/nvim"
-ln -sf "$HOME/dotfiles/.config/starship.toml" "$HOME/.config/starship.toml"
+brew bundle --file="$DOTFILES_DIR/Brewfile"
+
+# ==================================================
+# uv（グローバル CLI ツール）
+# ==================================================
+if ! command -v uv &> /dev/null; then
+    echo "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -f "$DOTFILES_DIR/.config/uv/uv-tools.txt" ]; then
+    while IFS= read -r tool || [ -n "$tool" ]; do
+        [[ "$tool" =~ ^#.*$ || -z "$tool" ]] && continue
+        echo "Installing $tool..."
+        uv tool install "$tool"
+    done < "$DOTFILES_DIR/.config/uv/uv-tools.txt"
+fi
+
+# Playwright ブラウザのインストール
+if command -v playwright &> /dev/null; then
+    echo "Installing Playwright browsers..."
+    playwright install chromium
+fi
+
+# ==================================================
+# Claude Code
+# ==================================================
+if ! command -v claude &> /dev/null; then
+    echo "Installing Claude Code..."
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+# ==================================================
+# Google Cloud SDK
+# ==================================================
+if ! command -v gcloud &> /dev/null && [ ! -d "$HOME/google-cloud-sdk" ]; then
+    echo "Installing Google Cloud SDK..."
+    export CLOUDSDK_CORE_DISABLE_PROMPTS=1
+    curl https://sdk.cloud.google.com | bash
+fi
+
+# ==================================================
+# 設定ファイル（シンボリックリンク）
+# ==================================================
+ln -sf "$DOTFILES_DIR/.hushlogin" ~/.hushlogin
+ln -sf "$DOTFILES_DIR/.gitconfig" ~/.gitconfig
+ln -sf "$DOTFILES_DIR/.zprofile" ~/.zprofile
+ln -sf "$DOTFILES_DIR/.zshrc" ~/.zshrc
+
+mkdir -p ~/.config/mise
+ln -sf "$DOTFILES_DIR/.config/mise/config.toml" ~/.config/mise/config.toml
+
+mkdir -p ~/.config/uv
+ln -sf "$DOTFILES_DIR/.config/uv/uv.toml" ~/.config/uv/uv.toml
+
+mkdir -p ~/.config/ghostty
+ln -sf "$DOTFILES_DIR/.config/ghostty/config" ~/.config/ghostty/config
+ln -sf "$DOTFILES_DIR/.config/ghostty/bg.jpg" ~/.config/ghostty/bg.jpg
+
+ln -sf "$DOTFILES_DIR/.config/starship.toml" ~/.config/starship.toml
+
+mkdir -p ~/.config/git
+ln -sf "$DOTFILES_DIR/.config/git/ignore" ~/.config/git/ignore
+
 ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf" "$HOME/.tmux.conf"
 ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf.osx" "$HOME/.tmux.conf.osx"
 ln -sf "$HOME/dotfiles/.config/tmux/tmux.powerline.conf" "$HOME/.tmux.powerline.conf"
 
-# Symlint ClaudeCode Settings
-mkdir -p "$HOME/.claude"
+# nvimはディレクトリ全体をシンボリックリンク
+if [ -d ~/.config/nvim ] && [ ! -L ~/.config/nvim ]; then
+    rm -rf ~/.config/nvim
+fi
+ln -sfn "$DOTFILES_DIR/.config/nvim" ~/.config/nvim
+
+# Claude Code設定（ファイル単位でリンク、他のファイルは残す）
+mkdir -p ~/.claude/sounds
 ln -sf "$DOTFILES_DIR/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
 ln -sf "$DOTFILES_DIR/.claude/settings.json" ~/.claude/settings.json
 ln -sf "$DOTFILES_DIR/.claude/statusline.sh" ~/.claude/statusline.sh
+ln -sfn "$DOTFILES_DIR/.claude/scripts" ~/.claude/scripts
 
 # skillsはディレクトリ全体をシンボリックリンク
 if [ -d ~/.claude/skills ] && [ ! -L ~/.claude/skills ]; then
     rm -rf ~/.claude/skills
 fi
 ln -sfn "$DOTFILES_DIR/.claude/skills" ~/.claude/skills
+
+echo "Setup complete! Run 'source ~/.zshrc' to apply changes."
