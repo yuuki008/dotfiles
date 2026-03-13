@@ -40,6 +40,7 @@ local options = {
 	scrolloff = 8, -- カーソルの上下に常に表示する行数
 	sidescrolloff = 8, -- カーソルの左右に常に表示する文字数
 	guifont = "monospace:h17", -- GUIフォント設定
+	helplang = "ja,en", -- ヘルプ言語（日本語優先）
 	splitbelow = false, -- オンのとき、ウィンドウを横分割すると新しいウィンドウはカレントウィンドウの下に開かれる
 	splitright = false, -- オンのとき、ウィンドウを縦分割すると新しいウィンドウはカレントウィンドウの右に開かれる
 }

@@ -4,7 +4,7 @@ vim.cmd("autocmd!")
 
 -- スクリプトエンコーディングをUTF-8に設定
 -- Vimスクリプト内の日本語コメントなどを正しく扱うために必要
-vim.sriptencoding = "utf-8";
+vim.scriptencoding = "utf-8";
 
 -- 行番号を表示（ウィンドウローカル設定）
 vim.wo.number = true;
