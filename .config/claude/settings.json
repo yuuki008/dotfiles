@@ -35,7 +35,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.sh",
+    "command": "~/.config/claude/statusline.sh",
     "padding": 2,
     "alwaysShow": true
   }
