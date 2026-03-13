@@ -20,3 +20,5 @@ Thumbs.db
 # 環境固有
 .direnv/
 .envrc.local
+
+**/.claude/settings.local.json

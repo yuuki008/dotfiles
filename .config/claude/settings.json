@@ -27,6 +27,16 @@
           }
         ]
       }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.config/claude/session-logger.sh"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
