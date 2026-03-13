@@ -7,9 +7,12 @@
 これはmacOS開発環境セットアップ用の個人dotfilesリポジトリです。以下の設定ファイルを管理しています:
 - Neovim (LSPサポート付きメインテキストエディタ)
 - tmux (ターミナルマルチプレクサ)
-- zsh (シェル)
+- zsh (シェル、XDG準拠で `.config/zsh/` に配置)
 - Starship (プロンプト)
-- Ranger (ファイルマネージャー)
+- WezTerm (ターミナルエミュレータ)
+- Karabiner-Elements (キーリマップ)
+- GitHub CLI (`gh`)
+- SSH設定
 
 ## セットアップとインストール
 
@@ -31,10 +34,25 @@ brew bundle -v --file="$HOME/dotfiles/Brewfile"
 ```
 
 ### シンボリックリンクの作成
-設定ファイルはリポジトリから標準的な場所へシンボリックリンクされます:
-- `~/.config/nvim` → `~/dotfiles/.config/nvim`
+`.bin/symlink.sh` を実行するとリポジトリ内の設定ファイルを自動検出してシンボリックリンクを作成します:
+
+```sh
+~/dotfiles/.bin/symlink.sh
+```
+
+作成される主なシンボリックリンク:
+- `~/.zshenv` → `~/dotfiles/.zshenv` (ZDOTDIRを `.config/zsh/` に設定)
+- `~/.config/zsh/.zshrc` → `~/dotfiles/.config/zsh/.zshrc`
+- `~/.config/zsh/.zprofile` → `~/dotfiles/.config/zsh/.zprofile`
+- `~/.gitconfig` → `~/dotfiles/.gitconfig`
 - `~/.config/starship.toml` → `~/dotfiles/.config/starship.toml`
-- `~/.tmux.conf` → `~/dotfiles/.config/tmux/tmux.conf`
+- `~/.config/wezterm/wezterm.lua` → `~/dotfiles/.config/wezterm/wezterm.lua`
+- `~/.config/gh/config.yml` → `~/dotfiles/.config/gh/config.yml`
+- `~/.config/karabiner/karabiner.json` → `~/dotfiles/.config/karabiner/karabiner.json`
+- `~/.ssh/config` → `~/dotfiles/.ssh/config`
+- `~/.config/nvim/` → `~/dotfiles/.config/nvim/` (各ファイル)
+
+**zsh XDGサポート**: `~/.zshenv` に `ZDOTDIR=$HOME/.config/zsh` を設定することで、`.zshrc` や `.zprofile` を XDG準拠の場所から読み込みます。
 
 ## Neovim設定アーキテクチャ
 
@@ -116,7 +134,13 @@ lspconfigのsetup関数ではなく、新しい `vim.lsp.config` APIを使用。
 
 ## シェル設定
 
-### zsh (.zshrc)
+### zsh (XDG準拠構成)
+zsh設定ファイルは `~/.config/zsh/` に配置されています (XDG Base Directory準拠):
+- `~/.zshenv`: ZDOTDIRを設定するエントリーポイント
+- `~/.config/zsh/.zshrc`: インタラクティブシェル設定
+- `~/.config/zsh/.zprofile`: ログインシェル設定 (PATH等の環境変数)
+
+**主な設定内容**:
 - **プロンプト**: Starship
 - **言語バージョン管理**: rbenv, pyenv, nodebrew
 - **パス追加**: Goバイナリ, カスタムスクリプト, Google Cloud SDK
