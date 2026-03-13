@@ -20,6 +20,8 @@ brew "gh"                # Github Cli
 brew "direnv"            # ディレクトリごとの環境変数管理
 brew "go"                # Go プログラミング言語
 brew "gopls"             # Go LSP サーバー
+brew "lua-language-server"  # Lua LSP サーバー
+brew "fish"              # Fish シェル（Neovim の shell オプションで使用）
 
 # Casks
 cask "google-cloud-sdk"

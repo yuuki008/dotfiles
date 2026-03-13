@@ -37,3 +37,9 @@ __pycache__/
 
 # GitHub CLI認証トークン
 .config/gh/hosts.yml
+
+# マシン固有のローカル設定
+*.local
+
+# 別プロジェクト
+mozumasu/
