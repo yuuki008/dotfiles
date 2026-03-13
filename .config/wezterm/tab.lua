@@ -23,18 +23,19 @@ local ICON_COLORS = {
 
 -- Tab colors (Catppuccin Mocha)
 local TAB_COLORS = {
-  foreground_inactive = "#7f849c",  -- overlay1
-  background_inactive = "none",
-  foreground_active = "#1e1e2e",    -- base
-  background_active = "#89b4fa",    -- blue
-  background_ssh_active = "#f38ba8", -- red
-  foreground_ssh_active = "#1e1e2e", -- base
+  bar_bg = "#181825",          -- mantle（タブバー背景）
+  fg_inactive = "#7f849c",     -- overlay1
+  bg_inactive = "#181825",     -- mantle
+  fg_active = "#cdd6f4",       -- text
+  bg_active = "#313244",       -- surface0
+  accent_active = "#89b4fa",   -- blue（アクティブタブのアクセント）
+  accent_ssh = "#f38ba8",      -- red（SSH時のアクセント）
 }
 
--- Tab decorations
-local DECORATIONS = {
-  left_circle = wezterm.nerdfonts.ple_left_half_circle_thick,
-  right_circle = wezterm.nerdfonts.ple_right_half_circle_thick,
+-- Powerline 区切り文字
+local EDGE = {
+  left = wezterm.nerdfonts.pl_left_hard_divider,
+  right = wezterm.nerdfonts.pl_right_hard_divider,
 }
 
 -- =============================================================================
@@ -95,16 +96,7 @@ local function get_icon_and_color(process_name, pane_title, is_ssh, is_active)
     return ICONS.docker, ICON_COLORS.docker
   end
 
-  return ICONS.fallback, TAB_COLORS.foreground_inactive
-end
-
-local function get_tab_colors(is_active, is_ssh)
-  if is_active and is_ssh then
-    return TAB_COLORS.background_ssh_active, TAB_COLORS.foreground_ssh_active
-  elseif is_active then
-    return TAB_COLORS.background_active, TAB_COLORS.foreground_active
-  end
-  return TAB_COLORS.background_inactive, TAB_COLORS.foreground_inactive
+  return ICONS.fallback, is_active and TAB_COLORS.fg_active or TAB_COLORS.fg_inactive
 end
 
 local function has_zoomed_pane(panes)
@@ -158,10 +150,13 @@ function module.apply_to_config(config)
       ssh_host_cache[pane_id] = nil
     end
 
-    -- タブの色
-    local background, foreground = get_tab_colors(tab.is_active, is_ssh)
-    local edge_background = "transparent"
-    local edge_foreground = background
+    local is_active = tab.is_active
+
+    -- 色の決定
+    local bg = is_active and TAB_COLORS.bg_active or TAB_COLORS.bg_inactive
+    local fg = is_active and TAB_COLORS.fg_active or TAB_COLORS.fg_inactive
+    local accent = is_ssh and TAB_COLORS.accent_ssh or TAB_COLORS.accent_active
+    local bar_bg = TAB_COLORS.bar_bg
 
     -- タイトルテキスト
     local title_text = is_ssh and (ssh_host_cache[pane_id] or "ssh") or (title_cache[pane_id] or "-")
@@ -173,38 +168,58 @@ function module.apply_to_config(config)
     end
 
     -- アイコン
-    local icon, icon_color = get_icon_and_color(process_name, pane_title, is_ssh, tab.is_active)
+    local icon, icon_color = get_icon_and_color(process_name, pane_title, is_ssh, is_active)
 
     -- ズームインジケーター
     local zoom_indicator = has_zoomed_pane(tab.panes) and (ICONS.zoom .. " ") or ""
 
-    -- 半円（アクティブタブのみ）
-    local left_circle = tab.is_active and DECORATIONS.left_circle or ""
-    local right_circle = tab.is_active and DECORATIONS.right_circle or ""
-
     -- タイトルの整形
-    local title = " " .. wezterm.truncate_right(title_text, max_width)
-    local claude_title = wezterm.truncate_right(claude_suffix, max_width) .. " "
+    local title = wezterm.truncate_right(title_text, max_width)
+    local claude_title = wezterm.truncate_right(claude_suffix, max_width)
 
-    return {
-      { Background = { Color = edge_background } },
-      { Text = " " },
-      { Foreground = { Color = edge_foreground } },
-      { Text = left_circle },
-      { Background = { Color = background } },
-      { Foreground = { Color = icon_color } },
-      { Text = icon },
-      { Background = { Color = background } },
-      { Foreground = { Color = foreground } },
-      { Text = zoom_indicator },
-      { Attribute = { Intensity = "Bold" } },
-      { Text = title },
-      { Attribute = { Intensity = "Normal" } },
-      { Text = claude_title },
-      { Background = { Color = edge_background } },
-      { Foreground = { Color = edge_foreground } },
-      { Text = right_circle },
-    }
+    if is_active then
+      -- アクティブタブ: アクセントカラーの左エッジ + surface0 背景
+      return {
+        -- アクセントバー（左端の細い色帯）
+        { Background = { Color = bar_bg } },
+        { Text = " " },
+        { Background = { Color = accent } },
+        { Foreground = { Color = accent } },
+        { Text = " " },
+        -- 本体
+        { Background = { Color = bg } },
+        { Foreground = { Color = accent } },
+        { Text = EDGE.left },
+        { Background = { Color = bg } },
+        { Foreground = { Color = icon_color } },
+        { Text = " " .. icon .. " " },
+        { Foreground = { Color = fg } },
+        { Text = zoom_indicator },
+        { Attribute = { Intensity = "Bold" } },
+        { Text = title },
+        { Attribute = { Intensity = "Normal" } },
+        { Foreground = { Color = TAB_COLORS.accent_active } },
+        { Text = claude_title },
+        { Text = "  " },
+        -- 右エッジ
+        { Background = { Color = bar_bg } },
+        { Foreground = { Color = bg } },
+        { Text = EDGE.left },
+      }
+    else
+      -- 非アクティブタブ: シンプル
+      return {
+        { Background = { Color = bar_bg } },
+        { Text = "  " },
+        { Foreground = { Color = icon_color } },
+        { Text = icon .. " " },
+        { Foreground = { Color = fg } },
+        { Text = zoom_indicator },
+        { Text = title },
+        { Text = claude_title },
+        { Text = "  " },
+      }
+    end
   end)
 end
 

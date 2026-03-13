@@ -20,18 +20,13 @@ local last_color = nil
 -- =============================================================================
 
 function module.apply_to_config(_)
-  -- ステータスバー更新（ワークスペース名表示 & カーソル色変更）
+  -- ステータスバー更新（カーソル色変更）
   wezterm.on("update-status", function(window, pane)
-    local workspace = window:active_workspace()
     local key_table = window:active_key_table()
     local color = WORKSPACE_COLORS[key_table] or WORKSPACE_COLORS.default
 
-    -- ワークスペース名の色を変更（全モード対応）
-    window:set_left_status(wezterm.format({
-      { Background = { Color = "transparent" } },
-      { Foreground = { Color = color } },
-      { Text = "  " .. workspace .. "  " },
-    }))
+    -- ワークスペース名は非表示
+    window:set_left_status("")
 
     -- カーソル色変更（OSCエスケープシーケンスを使用）
     if last_color ~= color then

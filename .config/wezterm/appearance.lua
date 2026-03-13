@@ -56,14 +56,8 @@ local appearance = {
   hide_tab_bar_if_only_one_tab = false,
   tab_bar_at_bottom = false,
   show_new_tab_button_in_tab_bar = false,
-  tab_max_width = 30,
-  use_fancy_tab_bar = true,
-  window_frame = {
-    inactive_titlebar_bg = p.mantle,
-    active_titlebar_bg = p.mantle,
-    font_size = 16.0,
-    font = wezterm.font("HackGen Console NF"),
-  },
+  tab_max_width = 50,
+  use_fancy_tab_bar = false,
   colors = {
     background = p.base,
     cursor_bg = p.blue,
