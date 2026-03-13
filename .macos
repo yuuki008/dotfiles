@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+# macOS デフォルト設定スクリプト
+# 新しいMacのセットアップ時に実行: chmod +x .macos && ./.macos
+# 参考: https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+
+# 管理者権限を事前に取得
+sudo -v
+
+# ==================================================
+# 一般
+# ==================================================
+
+# ダークモードを有効化
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+
+# ==================================================
+# キーボード
+# ==================================================
+
+# キーリピートを速くする
+defaults write NSGlobalDomain KeyRepeat -int 2
+
+# キーリピート開始までの待ち時間を短くする
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+
+# スペルの自動修正を無効化
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# 自動大文字変換を無効化
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+# ピリオド自動挿入を無効化
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# スマートクォートを無効化（プログラミング時に邪魔になるため）
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# スマートダッシュを無効化
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# ==================================================
+# Finder
+# ==================================================
+
+# 隠しファイルを表示
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# ファイル拡張子を常に表示
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# ステータスバーを表示
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# パスバーを表示
+defaults write com.apple.finder ShowPathbar -bool true
+
+# デフォルトの表示をリスト表示にする
+# Flwf=Cover Flow, Nlsv=List, icnv=Icon, clmv=Column
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# 拡張子変更時の警告を無効化
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+# .DS_Store をネットワークドライブに作成しない
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# .DS_Store を USB ドライブに作成しない
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# ==================================================
+# Dock
+# ==================================================
+
+# Dock を自動的に隠す
+defaults write com.apple.dock autohide -bool true
+
+# Dock の表示/非表示の遅延をなくす
+defaults write com.apple.dock autohide-delay -float 0
+
+# Dock のアニメーション速度を速くする
+defaults write com.apple.dock autohide-time-modifier -float 0.3
+
+# 最近使ったアプリを Dock に表示しない
+defaults write com.apple.dock show-recents -bool false
+
+# Dock のアイコンサイズを設定（ピクセル）
+defaults write com.apple.dock tilesize -int 48
+
+# ==================================================
+# スクリーンショット
+# ==================================================
+
+# スクリーンショットの保存先を ~/Screenshots にする
+mkdir -p "$HOME/Screenshots"
+defaults write com.apple.screencapture location -string "$HOME/Screenshots"
+
+# スクリーンショットの形式を PNG にする
+defaults write com.apple.screencapture type -string "png"
+
+# スクリーンショットに影を含めない
+defaults write com.apple.screencapture disable-shadow -bool true
+
+# ==================================================
+# トラックパッド
+# ==================================================
+
+# タップでクリックを有効化
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+
+# ==================================================
+# その他
+# ==================================================
+
+# クラッシュレポートを通知センターに表示しない
+defaults write com.apple.CrashReporter DialogType -string "none"
+
+# .app ファイルの初回起動確認を無効化
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+
+# ==================================================
+# 設定を反映
+# ==================================================
+
+echo "macOS の設定を適用しました。一部の設定を反映するには再起動が必要です。"
+
+# 影響を受けるアプリケーションを再起動
+for app in "Dock" "Finder" "SystemUIServer"; do
+  killall "$app" &>/dev/null || true
+done

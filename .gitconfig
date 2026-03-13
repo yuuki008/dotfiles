@@ -8,6 +8,9 @@
 	name = yuuki008
 	email = s22ah261@gmail.com
 
+[core]
+	excludesFile = ~/.config/git/ignore
+
 [http]
 	postBuffer = 524288000
 	version = HTTP/1.1

@@ -88,3 +88,6 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 # 起動時にも実行
 load-nvmrc
+
+# マシン固有のローカル設定を読み込み（Git管理外）
+[ -f "$ZDOTDIR/.zshrc.local" ] && source "$ZDOTDIR/.zshrc.local"
