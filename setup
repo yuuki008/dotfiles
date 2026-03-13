@@ -29,11 +29,6 @@ echo "Creating symlinks..."
 "$DOTFILES_DIR/.bin/symlink.sh"
 
 # ==================================================
-# Claude Code 固有の設定（.claude/ は symlink.sh 除外のため個別対応）
-# ==================================================
-chmod +x "$DOTFILES_DIR/.claude/statusline.sh"
-
-# ==================================================
 # macOS デフォルト設定（オプション）
 # ==================================================
 if [ -f "$DOTFILES_DIR/.macos" ]; then
