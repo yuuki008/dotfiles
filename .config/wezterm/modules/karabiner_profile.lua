@@ -98,11 +98,11 @@ function module.get_commands()
   return commands
 end
 
--- キーバインドを追加（LEADER + k）
+-- キーバインドを追加（LEADER + K）
 function module.apply_to_config(config)
   table.insert(config.keys, {
-    key = "k",
-    mods = "LEADER",
+    key = "K",
+    mods = "LEADER|SHIFT",
     action = create_profile_selector(),
   })
 end
