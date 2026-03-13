@@ -33,6 +33,20 @@ echo "Creating symlinks..."
 # ==================================================
 chmod +x "$DOTFILES_DIR/.claude/statusline.sh"
 
+# ==================================================
+# macOS デフォルト設定（オプション）
+# ==================================================
+if [ -f "$DOTFILES_DIR/.macos" ]; then
+  printf "Apply macOS default settings? (y/N): "
+  read -r answer
+  if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+    chmod +x "$DOTFILES_DIR/.macos"
+    "$DOTFILES_DIR/.macos"
+  else
+    echo "Skipped. Run '$DOTFILES_DIR/.macos' later to apply."
+  fi
+fi
+
 echo ""
 echo "Setup complete!"
 echo "Run 'source ~/.config/zsh/.zshrc' to apply shell changes."
