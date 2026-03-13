@@ -23,6 +23,17 @@ echo "Installing packages from Brewfile..."
 brew bundle --file="$DOTFILES_DIR/Brewfile"
 
 # ==================================================
+# life リポジトリのクローン
+# ==================================================
+LIFE_DIR="$HOME/life"
+if [ ! -d "$LIFE_DIR" ]; then
+  echo "Cloning life repository..."
+  git clone https://github.com/yuuki008/life.git "$LIFE_DIR"
+else
+  echo "life repository already exists at $LIFE_DIR, skipping."
+fi
+
+# ==================================================
 # シンボリックリンクの作成
 # ==================================================
 echo "Creating symlinks..."
