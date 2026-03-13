@@ -1,41 +1,38 @@
 #!/bin/sh
-
 set -e
 
-DOTFILES_DIR="$(pwd)"
-cd "$HOME"
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # ==================================================
-# 設定ファイル（シンボリックリンク）
+# Homebrew インストール
 # ==================================================
-ln -sf "$DOTFILES_DIR/.hushlogin" ~/.hushlogin
-ln -sf "$DOTFILES_DIR/.gitconfig" ~/.gitconfig
-ln -sf "$DOTFILES_DIR/.zprofile" ~/.zprofile
-ln -sf "$DOTFILES_DIR/.zshrc" ~/.zshrc
-
-ln -sf "$DOTFILES_DIR/.config/starship.toml" ~/.config/starship.toml
-
-ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf" "$HOME/.tmux.conf"
-ln -sf "$HOME/dotfiles/.config/tmux/tmux.conf.osx" "$HOME/.tmux.conf.osx"
-ln -sf "$HOME/dotfiles/.config/tmux/tmux.powerline.conf" "$HOME/.tmux.powerline.conf"
-
-# nvimはディレクトリ全体をシンボリックリンク
-if [ -d ~/.config/nvim ] && [ ! -L ~/.config/nvim ]; then
-    rm -rf ~/.config/nvim
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-ln -sfn "$DOTFILES_DIR/.config/nvim" ~/.config/nvim
 
-# Claude Code設定（ファイル単位でリンク、他のファイルは残す）
-ln -sf "$DOTFILES_DIR/.claude/CLAUDE.md" ~/.claude/CLAUDE.md
-ln -sf "$DOTFILES_DIR/.claude/settings.json" ~/.claude/settings.json
-ln -sf "$DOTFILES_DIR/.claude/statusline.sh" ~/.claude/statusline.sh
+# Apple Silicon の場合は Homebrew のパスを追加
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ==================================================
+# Homebrew パッケージのインストール
+# ==================================================
+echo "Installing packages from Brewfile..."
+brew bundle --file="$DOTFILES_DIR/Brewfile"
+
+# ==================================================
+# シンボリックリンクの作成
+# ==================================================
+echo "Creating symlinks..."
+"$DOTFILES_DIR/.bin/symlink.sh"
+
+# ==================================================
+# Claude Code 固有の設定（.claude/ は symlink.sh 除外のため個別対応）
+# ==================================================
 chmod +x "$DOTFILES_DIR/.claude/statusline.sh"
-ln -sfn "$DOTFILES_DIR/.claude/scripts" ~/.claude/scripts
 
-# skillsはディレクトリ全体をシンボリックリンク
-if [ -d ~/.claude/skills ] && [ ! -L ~/.claude/skills ]; then
-    rm -rf ~/.claude/skills
-fi
-ln -sfn "$DOTFILES_DIR/.claude/skills" ~/.claude/skills
-
-echo "Setup complete! Run 'source ~/.zshrc' to apply changes."
+echo ""
+echo "Setup complete!"
+echo "Run 'source ~/.config/zsh/.zshrc' to apply shell changes."
