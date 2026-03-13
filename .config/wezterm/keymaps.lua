@@ -181,6 +181,59 @@ local keys = {
   { key = "d", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
   { key = "x", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = true } }) },
 
+  -- 開発用レイアウト: 左上nvim、右上Claude Code、下ターミナル
+  {
+    key = "o",
+    mods = "LEADER",
+    action = wezterm.action_callback(function(window, pane)
+      -- 下にターミナルペインを作成（高さ30%）
+      local bottom_pane = pane:split({
+        direction = "Bottom",
+        size = 0.3,
+        domain = "CurrentPaneDomain",
+      })
+
+      -- 上ペイン（現在のpane）を右に分割してClaude Code（幅35%）
+      local right_pane = pane:split({
+        direction = "Right",
+        size = 0.35,
+        domain = "CurrentPaneDomain",
+        args = { os.getenv("SHELL"), "-lc", "claude" },
+      })
+
+      -- 左上ペインでnvimを起動
+      pane:send_text("nvim\n")
+    end),
+  },
+
+  -- Claude Code x3 レイアウト: 縦に3つ並べる
+  {
+    key = "O",
+    mods = "LEADER",
+    action = wezterm.action_callback(function(window, pane)
+      local claude_cmd = { os.getenv("SHELL"), "-lc", "claude" }
+
+      -- 左ペインでClaude Code起動
+      pane:send_text("claude\n")
+
+      -- 中央ペイン（右に分割、残りの66%）
+      local middle_pane = pane:split({
+        direction = "Right",
+        size = 0.66,
+        domain = "CurrentPaneDomain",
+        args = claude_cmd,
+      })
+
+      -- 右ペイン（中央から右に分割、残りの50%）
+      middle_pane:split({
+        direction = "Right",
+        size = 0.5,
+        domain = "CurrentPaneDomain",
+        args = claude_cmd,
+      })
+    end),
+  },
+
   -- Search mode
   {
     key = "f",
