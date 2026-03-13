@@ -1,8 +1,4 @@
 {
-  "enabledPlugins": {
-    "superpowers@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
-  },
   "hooks": {
     "Stop": [
       {
@@ -36,7 +32,10 @@
   "statusLine": {
     "type": "command",
     "command": "~/.config/claude/statusline.sh",
-    "padding": 2,
-    "alwaysShow": true
+    "padding": 2
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   }
 }
