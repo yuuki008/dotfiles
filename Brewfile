@@ -1,32 +1,64 @@
 # Brewfile
 
-# Formulae
+# ==============================
+# シェル・ターミナル
+# ==============================
+brew "zsh"               # シェル
+brew "tmux"              # 端末マルチプレクサ
+brew "starship"          # プロンプトテーマ
+brew "direnv"            # ディレクトリごとの環境変数管理
+brew "reattach-to-user-namespace"  # tmux でのクリップボード連携（macOS）
+
+# ==============================
+# エディタ・開発ツール
+# ==============================
+brew "neovim"            # テキストエディタ
 brew "git"               # バージョン管理ツール
+brew "git-filter-repo"   # Git 履歴操作ツール
+brew "gh"                # GitHub CLI
+brew "lazygit"           # Git TUI クライアント
+brew "claude-code"       # Claude Code CLI
+brew "act"               # GitHub Actions ローカル実行
+
+# ==============================
+# 言語・ランタイム
+# ==============================
 brew "node"              # JavaScript ランタイム
-brew "typescript-language-server"  # TypeScript LSP サーバー
+brew "bun"               # JavaScript ランタイム/バンドラ
+brew "typescript"        # TypeScript コンパイラ
+brew "go"                # Go プログラミング言語
+brew "pyenv"             # Python バージョン管理
 brew "cmake"             # ビルドシステム
 brew "gcc"               # コンパイラ
-brew "neovim"            # テキストエディタ
-brew "tmux"              # 端末マルチプレクサ
+
+# ==============================
+# LSP サーバー
+# ==============================
+brew "typescript-language-server"  # TypeScript LSP サーバー
+brew "gopls"             # Go LSP サーバー
+brew "lua-language-server"  # Lua LSP サーバー
+brew "terraform-ls"      # Terraform LSP サーバー
+
+# ==============================
+# CLI ユーティリティ
+# ==============================
 brew "wget"              # ファイルダウンロードツール
 brew "curl"              # データ転送ツール
-brew "openssl@1.1"       # 暗号化ライブラリ
-brew "zsh"               # シェル
 brew "jq"                # JSON プロセッサ
 brew "tree"              # ディレクトリ構造表示ツール
 brew "ranger"            # TUI ファイル管理アプリケーション
-brew "claude-code"
-brew "gh"                # Github Cli
-brew "direnv"            # ディレクトリごとの環境変数管理
-brew "go"                # Go プログラミング言語
-brew "gopls"             # Go LSP サーバー
-brew "lua-language-server"  # Lua LSP サーバー
-brew "fish"              # Fish シェル（Neovim の shell オプションで使用）
+brew "duckdb"            # 分析用データベースエンジン
+brew "cloudflared"       # Cloudflare トンネルクライアント
+brew "openssl@1.1"       # 暗号化ライブラリ
 
-# Casks
-cask "google-cloud-sdk"
-cask "chromedriver"
-cask "ngrok"
-cask "ghostty"
-cask "wezterm"
-cask "font-hackgen-nerd"
+# ==============================
+# Casks（GUI アプリ・フォント）
+# ==============================
+cask "wezterm"           # ターミナルエミュレータ（メイン）
+cask "ghostty"           # ターミナルエミュレータ
+cask "gcloud-cli"        # Google Cloud SDK
+cask "chromedriver"      # Chrome 自動化ドライバ
+cask "ngrok"             # トンネリングツール
+cask "1password-cli"     # 1Password CLI
+cask "font-hackgen-nerd" # HackGen Nerd フォント
+cask "font-udev-gothic-nf"  # UDEV Gothic Nerd フォント
