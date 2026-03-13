@@ -245,8 +245,8 @@ local keys = {
     }),
   },
   {
-    key = "X",
-    mods = "CTRL",
+    key = "v",
+    mods = "LEADER",
     action = act.Multiple({
       act.ActivateCopyMode,
       act.CopyMode("ClearPattern"),
