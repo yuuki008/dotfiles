@@ -1,57 +1,36 @@
+---@type Wezterm
 local wezterm = require("wezterm")
+
 local config = wezterm.config_builder()
 
--- ==================================================
--- フォント
--- ==================================================
-config.font = wezterm.font("UDEV Gothic 35NFLG")
+config.automatically_reload_config = true
+
+-- macSKK向け: Control-jで改行されないようにする設定
+-- https://github.com/mtgto/macSKK?tab=readme-ov-file#q-wezterm-%E3%81%A7-c-j-%E3%82%92%E6%8A%BC%E3%81%99%E3%81%A8%E6%94%B9%E8%A1%8C%E3%81%95%E3%82%8C%E3%81%A6%E3%81%97%E3%81%BE%E3%81%84%E3%81%BE%E3%81%99
+---@diagnostic disable-next-line: assign-type-mismatch
+config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
+
+-- font
 config.font_size = 14.0
+config.font = wezterm.font("HackGen Console NF")
 
--- ==================================================
--- カラースキーム
--- ==================================================
-config.color_scheme = "Tokyo Night"
+-- 背景の透過度とぼかし
+config.window_background_opacity = 0.9  -- 非フォーカス時のデフォルト（blur見える）
+config.macos_window_background_blur = 8  -- opacityで視覚的に制御
 
--- ==================================================
--- ウィンドウ
--- ==================================================
-config.window_background_opacity = 0.95
-config.macos_window_background_blur = 20
-config.window_padding = {
-  left = 8,
-  right = 8,
-  top = 8,
-  bottom = 8,
-}
-config.initial_cols = 220
-config.initial_rows = 50
+-- ステータスバー更新間隔（デフォルト1000ms → 1500ms）
+config.status_update_interval = 1500
 
--- ==================================================
--- タブバー
--- ==================================================
-config.hide_tab_bar_if_only_one_tab = true
-config.use_fancy_tab_bar = false
+require("keymaps").apply_to_config(config)
+require("workspace").apply_to_config(config)
+require("appearance").apply_to_config(config)
+require("tab").apply_to_config(config)
+require("statusbar").apply_to_config(config)
 
--- ==================================================
--- キーバインド（tmux C-t プレフィックスと整合）
--- ==================================================
-config.keys = {
-  -- Cmd+T で新しいタブ
-  { key = "t", mods = "CMD", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
-  -- Cmd+W でタブを閉じる
-  { key = "w", mods = "CMD", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
-  -- Cmd+数字でタブ切り替え
-  { key = "1", mods = "CMD", action = wezterm.action.ActivateTab(0) },
-  { key = "2", mods = "CMD", action = wezterm.action.ActivateTab(1) },
-  { key = "3", mods = "CMD", action = wezterm.action.ActivateTab(2) },
-  { key = "4", mods = "CMD", action = wezterm.action.ActivateTab(3) },
-  { key = "5", mods = "CMD", action = wezterm.action.ActivateTab(4) },
-}
-
--- ==================================================
--- その他
--- ==================================================
-config.scrollback_lines = 10000
-config.enable_scroll_bar = false
+-- オプショナルモジュール（keymapsの後に読み込む）
+require("modules.opacity").apply_to_config(config)
+require("modules.karabiner_profile").apply_to_config(config)
+require("modules.claude_session").apply_to_config(config)
+require("modules.translate").apply_to_config(config)
 
 return config
