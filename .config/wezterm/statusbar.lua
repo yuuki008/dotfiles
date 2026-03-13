@@ -5,10 +5,11 @@ local module = {}
 -- 定数
 -- =============================================================================
 
+-- Catppuccin Mocha
 local WORKSPACE_COLORS = {
-  default = "#80EBDF",
-  copy_mode = "#ffd700",
-  setting_mode = "#39FF14",
+  default = "#89b4fa",      -- blue
+  copy_mode = "#f9e2af",    -- yellow
+  setting_mode = "#a6e3a1", -- green
 }
 
 -- 前回の色を記録（不要な更新を避けるため）

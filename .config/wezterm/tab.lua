@@ -14,21 +14,21 @@ local ICONS = {
   zoom = wezterm.nerdfonts.md_magnify,
 }
 
--- Icon colors
+-- Icon colors (Catppuccin Mocha)
 local ICON_COLORS = {
-  docker = "#4169e1",
-  neovim = "#57A143",
-  ssh = "#ff6b6b",
+  docker = "#89b4fa",   -- blue
+  neovim = "#a6e3a1",   -- green
+  ssh = "#f38ba8",      -- red
 }
 
--- Tab colors
+-- Tab colors (Catppuccin Mocha)
 local TAB_COLORS = {
-  foreground_inactive = "#a0a9cb",
+  foreground_inactive = "#7f849c",  -- overlay1
   background_inactive = "none",
-  foreground_active = "#313244",
-  background_active = "#80EBDF",
-  background_ssh_active = "#ff6b6b",
-  foreground_ssh_active = "#ffffff",
+  foreground_active = "#1e1e2e",    -- base
+  background_active = "#89b4fa",    -- blue
+  background_ssh_active = "#f38ba8", -- red
+  foreground_ssh_active = "#1e1e2e", -- base
 }
 
 -- Tab decorations
