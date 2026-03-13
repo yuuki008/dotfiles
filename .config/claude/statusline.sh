@@ -122,29 +122,33 @@ if [ "$CACHE_AGE" -gt "$QUOTA_CACHE_TTL" ]; then
     ) &
 fi
 
-# キャッシュから読み取り、3-4行目を出力
+# キャッシュから読み取り、3-4行目を出力 (キャッシュ未取得時もプレースホルダーで表示)
 if [ -f "$QUOTA_CACHE" ]; then
     read -r FIVE_H SEVEN_D FIVE_H_EPOCH SEVEN_D_EPOCH < "$QUOTA_CACHE"
-    if [ -n "$FIVE_H" ] && [ -n "$SEVEN_D" ]; then
-        FIVE_H_INT=$(printf "%.0f" "$FIVE_H")
-        SEVEN_D_INT=$(printf "%.0f" "$SEVEN_D")
+fi
 
-        FIVE_COLOR=$(color_for_pct "$FIVE_H_INT")
-        SEVEN_COLOR=$(color_for_pct "$SEVEN_D_INT")
+if [ -n "$FIVE_H" ] && [ -n "$SEVEN_D" ]; then
+    FIVE_H_INT=$(printf "%.0f" "$FIVE_H")
+    SEVEN_D_INT=$(printf "%.0f" "$SEVEN_D")
 
-        FIVE_BAR=$(make_bar "$FIVE_H_INT")
-        SEVEN_BAR=$(make_bar "$SEVEN_D_INT")
+    FIVE_COLOR=$(color_for_pct "$FIVE_H_INT")
+    SEVEN_COLOR=$(color_for_pct "$SEVEN_D_INT")
 
-        FIVE_RESET_STR=$(format_reset_time "$FIVE_H_EPOCH")
-        SEVEN_RESET_STR=$(format_reset_time "$SEVEN_D_EPOCH")
+    FIVE_BAR=$(make_bar "$FIVE_H_INT")
+    SEVEN_BAR=$(make_bar "$SEVEN_D_INT")
 
-        FIVE_RESET_PART="  ${DIM}reset ${FIVE_RESET_STR:--}${RESET}"
-        SEVEN_RESET_PART="  ${DIM}reset ${SEVEN_RESET_STR:--}${RESET}"
+    FIVE_RESET_STR=$(format_reset_time "$FIVE_H_EPOCH")
+    SEVEN_RESET_STR=$(format_reset_time "$SEVEN_D_EPOCH")
 
-        FIVE_PCT=$(printf "%3d" "$FIVE_H_INT")
-        SEVEN_PCT=$(printf "%3d" "$SEVEN_D_INT")
+    FIVE_RESET_PART="  ${DIM}reset ${FIVE_RESET_STR:--}${RESET}"
+    SEVEN_RESET_PART="  ${DIM}reset ${SEVEN_RESET_STR:--}${RESET}"
 
-        echo -e "5h  ${FIVE_COLOR}${FIVE_BAR} ${FIVE_PCT}%${RESET}${FIVE_RESET_PART}"
-        echo -e "7d  ${SEVEN_COLOR}${SEVEN_BAR} ${SEVEN_PCT}%${RESET}${SEVEN_RESET_PART}"
-    fi
+    FIVE_PCT=$(printf "%3d" "$FIVE_H_INT")
+    SEVEN_PCT=$(printf "%3d" "$SEVEN_D_INT")
+
+    echo -e "5h  ${FIVE_COLOR}${FIVE_BAR} ${FIVE_PCT}%${RESET}${FIVE_RESET_PART}"
+    echo -e "7d  ${SEVEN_COLOR}${SEVEN_BAR} ${SEVEN_PCT}%${RESET}${SEVEN_RESET_PART}"
+else
+    echo -e "5h  ${DIM}□□□□□□□□□□  --%  reset --${RESET}"
+    echo -e "7d  ${DIM}□□□□□□□□□□  --%  reset --${RESET}"
 fi
