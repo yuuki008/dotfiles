@@ -9,7 +9,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "open -a Ghostty"
+            "command": "open -a Wezterm"
           },
           {
             "type": "command",
@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "open -a Ghostty"
+            "command": "open -a Wezterm"
           },
           {
             "type": "command",
