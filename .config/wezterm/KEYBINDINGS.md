@@ -125,13 +125,14 @@ Vimライクなキーで画面テキストを選択・コピーできます。
 
 ---
 
-## コマンドランチャー
+## レイアウト・ランチャー
 
 | キー | 動作 |
 |------|------|
-| `Ctrl+T` → `O` | ランチャー（lazygit / nvim / yazi など） |
+| `Ctrl+T` → `o` | 開発レイアウト（左上: nvim、右上: Claude Code、下: ターミナル） |
+| `Ctrl+T` → `O` | Claude Code x3 レイアウト（縦3分割で各ペインに Claude Code） |
 | `Ctrl+T` → `B` | バッファの内容をNeovimで表示 |
-| `Ctrl+P` | コマンドパレット |
+| `Ctrl+P` | コマンドパレット（lazygit / nvim / yazi などのランチャーを含む） |
 
 ---
 

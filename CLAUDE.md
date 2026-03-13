@@ -107,6 +107,8 @@ brew bundle -v --file="$HOME/dotfiles/Brewfile"
 - Ruby: `solargraph`
 - Terraform: `terraformls`
 - Swift: `sourcekit`
+- JavaScript (Flow): `flow`
+- Tailwind CSS: `tailwindcss`
 
 **自動フォーマット**: `documentFormattingProvider` 機能を持つ LSP サーバーで保存時に有効化。
 
@@ -211,4 +213,4 @@ brew bundle -v --file="$HOME/dotfiles/Brewfile"
 - Google Cloud SDK のパスは `/usr/local/Caskroom/google-cloud-sdk/latest/` にハードコード
 - Neovim 設定は Lua のみ使用 (Vimscript なし)
 - LSP 設定は Neovim 0.11+ API (`vim.lsp.config` と `vim.lsp.enable`) を使用
-- Neovim の shell オプションは `fish` を使用（Brewfile に含まれている）
+- Neovim の shell オプションは `fish` を使用（別途インストールが必要）
