@@ -36,6 +36,7 @@ if [[ "$LINE_COUNT" -lt "$MIN_LINES" ]]; then
 fi
 
 # バックグラウンドで要約生成（フックのタイムアウトを回避）
+# stdin/stdout/stderr を閉じ、disown でプロセスを完全にデタッチする
 (
   mkdir -p "$LOGS_DIR"
 
@@ -128,6 +129,7 @@ PROMPT_EOF
 
   echo "$SUMMARY" > "$OUTPUT_FILE"
 
-) &
+) </dev/null >/dev/null 2>&1 &
+disown
 
 exit 0
