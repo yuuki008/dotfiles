@@ -15,6 +15,6 @@ export PATH="$HOME/.local/bin:$PATH"
 # ==================================================
 # Google Cloud SDK
 # ==================================================
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then
-  . "$HOME/google-cloud-sdk/path.zsh.inc"
+if [ -f "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc" ]; then
+  . "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 fi

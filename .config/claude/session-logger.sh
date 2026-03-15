@@ -4,12 +4,12 @@
 # SessionEnd フックから呼ばれ、バックグラウンドで会話の要約を生成して logs/ に保存する。
 #
 # 入力: stdin から JSON（session_id, transcript_path, cwd 等）
-# 出力: ~/life/logs/YYYYMMDD-HHMMSS.md
+# 出力: ~/ghq/github.com/yuuki008/life/logs/YYYYMMDD-HHMMSS.md
 #
 
 set -euo pipefail
 
-LOGS_DIR="$HOME/life/logs"
+LOGS_DIR="$(ghq root)/github.com/yuuki008/life/logs"
 MIN_LINES=10
 
 # stdin からフックデータを読み取る

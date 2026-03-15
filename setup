@@ -25,12 +25,15 @@ brew bundle --file="$DOTFILES_DIR/Brewfile"
 # ==================================================
 # life リポジトリのクローン
 # ==================================================
-LIFE_DIR="$HOME/life"
-if [ ! -d "$LIFE_DIR" ]; then
-  echo "Cloning life repository..."
-  git clone https://github.com/yuuki008/life.git "$LIFE_DIR"
+if command -v ghq >/dev/null 2>&1; then
+  if ! ghq list | grep -q "yuuki008/life"; then
+    echo "Cloning life repository via ghq..."
+    ghq get https://github.com/yuuki008/life.git
+  else
+    echo "life repository already exists in ghq, skipping."
+  fi
 else
-  echo "life repository already exists at $LIFE_DIR, skipping."
+  echo "Warning: ghq not found, skipping life repository clone."
 fi
 
 # ==================================================

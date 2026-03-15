@@ -26,7 +26,6 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"                                        # curl
 export PATH="$HOME/usr/local/bin:$PATH"
 export PATH="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:$PATH" # Google Cloud SDK
-export PATH="$HOME/github/yuuki008/aoj/cli:$PATH"                                  # 競技プログラミング用CLI
 
 # rbenvの初期化（Rubyバージョン管理）
 if command -v rbenv 1>/dev/null 2>&1; then
@@ -50,11 +49,22 @@ alias dc='docker-compose'       # docker-composeの短縮形
 # lazygit（Git TUIツール）
 alias lg="lazygit"
 
+# ghq + fzf でリポジトリに素早く移動
+function repo() {
+  local dir=$(ghq list -p | fzf --preview "ls -la {}")
+  if [ -n "$dir" ]; then
+    cd "$dir"
+  fi
+}
+
 # Starship（プロンプトテーマ）の初期化
 eval "$(starship init zsh)"
 
 # Direnv の設定
 eval "$(direnv hook zsh)"
+
+# zoxide（スマートディレクトリ移動）の初期化
+eval "$(zoxide init zsh)"
 
 # nvm（Node.jsバージョン管理）の設定
 export NVM_DIR="$HOME/.nvm"

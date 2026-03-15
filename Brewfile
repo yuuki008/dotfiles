@@ -16,6 +16,7 @@ brew "neovim"            # テキストエディタ
 brew "git"               # バージョン管理ツール
 brew "git-filter-repo"   # Git 履歴操作ツール
 brew "gh"                # GitHub CLI
+brew "ghq"               # Git リポジトリ管理ツール
 brew "lazygit"           # Git TUI クライアント
 brew "claude-code"       # Claude Code CLI
 brew "act"               # GitHub Actions ローカル実行
@@ -42,6 +43,8 @@ brew "terraform-ls"      # Terraform LSP サーバー
 # ==============================
 # CLI ユーティリティ
 # ==============================
+brew "fzf"               # あいまい検索ツール
+brew "zoxide"            # スマートディレクトリ移動ツール
 brew "wget"              # ファイルダウンロードツール
 brew "curl"              # データ転送ツール
 brew "jq"                # JSON プロセッサ
