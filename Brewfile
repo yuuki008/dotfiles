@@ -52,6 +52,7 @@ brew "tree"              # ディレクトリ構造表示ツール
 brew "ranger"            # TUI ファイル管理アプリケーション
 brew "duckdb"            # 分析用データベースエンジン
 brew "cloudflared"       # Cloudflare トンネルクライアント
+brew "gogcli"            # Google OAuth CLI（OpenClaw 連携用）
 brew "openssl@1.1"       # 暗号化ライブラリ
 
 # ==============================

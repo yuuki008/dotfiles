@@ -5,6 +5,7 @@
 *.key
 id_rsa*
 *.secret
+.envrc
 
 # 認証情報
 credentials.json
