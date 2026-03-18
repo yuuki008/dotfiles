@@ -47,6 +47,8 @@ brew "terraform-ls"      # Terraform LSP サーバー
 # ==============================
 # CLI ユーティリティ
 # ==============================
+brew "ripgrep"           # 高速テキスト検索ツール（Telescope live grep 用）
+brew "fd"                # 高速ファイル検索ツール（Telescope find files 用）
 brew "fzf"               # あいまい検索ツール
 brew "zoxide"            # スマートディレクトリ移動ツール
 brew "wget"              # ファイルダウンロードツール
