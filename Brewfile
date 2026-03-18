@@ -1,6 +1,11 @@
 # Brewfile
 
 # ==============================
+# Taps
+# ==============================
+tap "oven-sh/bun"        # Bun JavaScript ランタイム
+
+# ==============================
 # シェル・ターミナル
 # ==============================
 brew "zsh"               # シェル
@@ -18,7 +23,6 @@ brew "git-filter-repo"   # Git 履歴操作ツール
 brew "gh"                # GitHub CLI
 brew "ghq"               # Git リポジトリ管理ツール
 brew "lazygit"           # Git TUI クライアント
-brew "claude-code"       # Claude Code CLI
 brew "act"               # GitHub Actions ローカル実行
 
 # ==============================
