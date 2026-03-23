@@ -69,6 +69,8 @@ cask "ghostty"           # ターミナルエミュレータ
 cask "gcloud-cli"        # Google Cloud SDK
 cask "chromedriver"      # Chrome 自動化ドライバ
 cask "ngrok"             # トンネリングツール
+cask "docker"            # Docker Desktop
+cask "tailscale"         # VPN（WireGuard ベース、リモートアクセス用）
 cask "1password-cli"     # 1Password CLI
 cask "font-hackgen-nerd" # HackGen Nerd フォント
 cask "font-udev-gothic-nf"  # UDEV Gothic Nerd フォント
