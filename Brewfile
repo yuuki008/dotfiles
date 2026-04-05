@@ -55,11 +55,14 @@ brew "wget"              # ファイルダウンロードツール
 brew "curl"              # データ転送ツール
 brew "jq"                # JSON プロセッサ
 brew "tree"              # ディレクトリ構造表示ツール
+brew "glow"              # ターミナル内マークダウンプレビュー
+brew "grip"              # GitHub 風マークダウンプレビュー（ブラウザ）
 brew "ranger"            # TUI ファイル管理アプリケーション
 brew "duckdb"            # 分析用データベースエンジン
 brew "cloudflared"       # Cloudflare トンネルクライアント
 brew "gogcli"            # Google OAuth CLI（OpenClaw 連携用）
 brew "openssl@3"         # 暗号化ライブラリ
+brew "oci-cli"           # Oracle Cloud Infrastructure CLI
 
 # ==============================
 # Casks（GUI アプリ・フォント）
