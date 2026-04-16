@@ -63,6 +63,7 @@ brew "cloudflared"       # Cloudflare トンネルクライアント
 brew "gogcli"            # Google OAuth CLI（OpenClaw 連携用）
 brew "openssl@3"         # 暗号化ライブラリ
 brew "oci-cli"           # Oracle Cloud Infrastructure CLI
+brew "poppler"           # PDF テキスト抽出・変換ツール
 
 # ==============================
 # Casks（GUI アプリ・フォント）
