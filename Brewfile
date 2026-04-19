@@ -33,6 +33,7 @@ brew "bun"               # JavaScript ランタイム/バンドラ
 brew "typescript"        # TypeScript コンパイラ
 brew "go"                # Go プログラミング言語
 brew "pyenv"             # Python バージョン管理
+brew "pipx"              # Python CLI ツールを隔離環境にインストール
 brew "cmake"             # ビルドシステム
 brew "gcc"               # コンパイラ
 
@@ -64,6 +65,7 @@ brew "gogcli"            # Google OAuth CLI（OpenClaw 連携用）
 brew "openssl@3"         # 暗号化ライブラリ
 brew "oci-cli"           # Oracle Cloud Infrastructure CLI
 brew "poppler"           # PDF テキスト抽出・変換ツール
+brew "yt-dlp"            # 動画ダウンロードツール
 
 # ==============================
 # Casks（GUI アプリ・フォント）
