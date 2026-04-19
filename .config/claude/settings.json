@@ -1,13 +1,8 @@
 {
-  "effortLevel": "high",
   "hooks": {
     "Stop": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "open -a Wezterm"
-          },
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Glass.aiff &"
@@ -18,10 +13,6 @@
     "PermissionRequest": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "open -a Wezterm"
-          },
           {
             "type": "command",
             "command": "afplay /System/Library/Sounds/Ping.aiff &"
@@ -49,5 +40,8 @@
     "superpowers@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true
-  }
+  },
+  "effortLevel": "high",
+  "defaultMode": "auto",
+  "skipAutoPermissionPrompt": true
 }
